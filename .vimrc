@@ -117,7 +117,7 @@ filetype plugin indent on
 
 "colorscheme tmc256
 "colorscheme 256_noir
-silent colorscheme jellybeans
+silent! colorscheme jellybeans
 set cursorline
 set ruler
 set modeline
