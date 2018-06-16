@@ -122,7 +122,13 @@ export GOPATH=$HOME/go
 export EDITOR=vim
 export PATH=$GOPATH/bin:$PATH
 export PATH=$HOME/.cargo/bin:$PATH
+export PATH=/home/user/.config/yarn/global/node_modules/.bin:$PATH
 alias t="cd ~/go/src/github.com/tmc"
+alias b="cd ~/go/src/github.com/tmc/tmc.github.io"
+alias bs="cd ~/go/src/github.com/tmc/tmc.github.io/src"
+alias s="cd ~/go/src/github.com/logv/sybil"
+alias sn="cd ~/go/src/github.com/logv/snorkel"
+alias gh="hub"
 alias pbcopy='xclip -selection clipboard'
 alias pbpaste='xclip -selection clipboard -o'
 
@@ -132,11 +138,3 @@ alias pbcopy='xclip -selection clipboard'
 alias pbpaste='xclip -selection clipboard -o'
 
 
-[ -f ~/.fzf.bash ] && source ~/.fzf.bash
-
-# --files: List files that would be searched but do not search
-# --no-ignore: Do not respect .gitignore, etc...
-# --hidden: Search hidden files and folders
-# --follow: Follow symlinks
-# --glob: Additional conditions for search (in this case ignore everything in the .git/ folder)
-export FZF_DEFAULT_COMMAND='rg --files --no-ignore --hidden --follow --glob "!.git/*"'
