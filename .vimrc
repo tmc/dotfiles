@@ -147,7 +147,6 @@ let g:UltiSnipsExpandTrigger="<c-j>"
 let g:ctrlp_cmd = 'CtrlPMixed'
 let g:ctrlp_working_path_mode = 'ra'
 
-" http://sheerun.net/2014/03/21/how-to-boost-your-vim-productivity/
 vmap v <Plug>(expand_region_expand)
 vmap <C-v> <Plug>(expand_region_shrink)
 
@@ -162,9 +161,6 @@ let g:airline_theme='powerlineish'
 "let g:airline_left_sep=''
 "let g:airline_right_sep=''
 "let g:airline_section_z=''
-
-"cpp support
-let g:ycm_global_ycm_extra_conf = "~/.vim/plugged/YouCompleteMe/third_party/ycmd/cpp/ycm/.ycm_extra_conf.py"
 
 " jsx support (React)
 let g:jsx_ext_required = 0
@@ -181,16 +177,10 @@ autocmd BufNewFile,BufRead Vagrantfile set filetype=ruby
 autocmd BufNewFile,BufRead Berksfile set filetype=ruby
 
 let g:ctrlp_use_caching = 0
-if executable('ag')
-    set grepprg=ag\ --nogroup\ --nocolor
-
-    let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
-else
-  let g:ctrlp_user_command = ['.git', 'cd %s && git ls-files . -co --exclude-standard', 'find %s -type f']
-  let g:ctrlp_prompt_mappings = {
+let g:ctrlp_user_command = ['.git', 'cd %s && git ls-files . -co --exclude-standard', 'find %s -type f']
+let g:ctrlp_prompt_mappings = {
     \ 'AcceptSelection("e")': ['<space>', '<cr>', '<2-LeftMouse>'],
     \ }
-endif
 
 au BufNewFile,BufRead *.go setlocal noet ts=4 sw=4 sts=4
 
@@ -198,10 +188,8 @@ au BufNewFile,BufRead *.go setlocal noet ts=4 sw=4 sts=4
 "highlight OverLength ctermbg=red ctermfg=white guibg=#592929
 "match OverLength /\%81v.\+/
 
-set runtimepath^=~/.vim/bundle/ctrlp.vim
-
 " vim-go
-let g:go_fmt_command = "goreturns"
+let g:go_fmt_command = "goimports"
 let g:go_highlight_functions = 1
 let g:go_highlight_methods = 1
 let g:go_highlight_fields = 1
@@ -355,3 +343,6 @@ nmap <Leader>t :Files<CR>
 nmap <Leader>f :Find<CR>
 nmap <Leader>r :Tags<CR>
 
+set grepprg=rg\ --vimgrep
+
+command! -bang -nargs=* Find call fzf#vim#grep('rg --column --line-number --no-heading --fixed-strings --ignore-case --no-ignore --hidden --follow --glob "!.git/*" --color "always" '.shellescape(<q-args>), 1, <bang>0)
