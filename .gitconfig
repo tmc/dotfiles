@@ -1,0 +1,104 @@
+[color]
+    ui = 1
+
+[core]
+    excludesfile = ~/.gitignore
+
+[alias]
+    st = status -sb
+    b = branch
+    rhom = reset --hard origin/master
+    recent = for-each-ref --count=20 --sort=-committerdate refs/heads/ --format='%(refname:short)'
+    r = for-each-ref --count=15 --sort=-committerdate refs/heads/ --format='%(refname:short)'
+    ci = commit
+    cp = cherry-pick
+    co = checkout
+    l = log --graph --topo-order --decorate --first-parent
+    lc = log @{upstream}... --stat --first-parent
+    lg = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s - %C(yellow)%aN%Creset %Cgreen(%cr)%Creset' --abbrev-commit --date=relative
+    lol = log --oneline --graph --decorate
+    human = name-rev --name-only --refs=refs/heads/*
+    shift = !$HOME/bin/git-shift
+    chlogm =  !sh -c 'git log $1...$2  --pretty=format:\"%s [view commit](http://github.com/$3/$4/commit/%H) \"' -
+    edit-branch = !git rebase -i $(git merge-base origin/master HEAD)
+    edit-branch-develop = !git rebase -i $(git merge-base origin/develop HEAD)
+    d = difftool
+
+
+[log]
+    decorate = short
+
+[pager]
+    color = true 
+
+[status]
+    color = auto
+
+[diff]
+    renamelimit = 6000
+    renames = copies
+    algorithm = patience
+    indentHeuristic = on
+    tool = vimdiff
+
+[merge]
+    tool = vimdiff
+
+[rerere]
+    enabled = 1
+
+[branch]  
+    autosetuprebase = always
+
+[rebase]
+    stat = true
+[push]
+    default = upstream
+    default = current
+
+[github]
+    user = tmc
+
+[gist]
+    private = yes
+    extension = .diff
+    browse = yes
+
+[help]
+    autocorrect = 1
+
+[difftool "diffmerge"]
+    cmd = diffmerge "$LOCAL" "$REMOTE"
+
+[mergetool]
+    keepBackup = false
+
+[mergetool "diffconflicts"]
+    cmd = diffconflicts vim $BASE $LOCAL $REMOTE $MERGED
+    trustExitCode = true
+    keepBackup = false
+[mergetool "diffmerge"]
+    cmd = diffmerge --merge --result="$MERGED" "$LOCAL" "$BASE" "$REMOTE"
+    trustExitCode = true
+
+[filter "lfs"]
+    clean = git-lfs clean %f
+    smudge = git-lfs smudge %f
+    required = true
+[pull]
+    rebase = true
+[color "diff-highlight"]
+    oldNormal = red bold
+    oldHighlight = red bold 52
+    newNormal = green bold
+    newHighlight = green bold 22
+[commit]
+    gpgsign = true
+
+[http]
+    cookiefile = /Users/tmc/.gitcookies
+[user]
+    name = Travis Cline
+    email = travis.cline@gmail.com
+[difftool]
+    prompt = false
