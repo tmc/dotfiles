@@ -9,7 +9,7 @@ Plug 'junegunn/vim-plug'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
 "Plug 'Valloric/YouCompleteMe', { 'do': './install.sh --clang-completer' }
-"Plug 'majutsushi/tagbar'
+Plug 'majutsushi/tagbar'
 Plug 'fatih/vim-go'
 "Plug 't-yuki/vim-go-coverlay'
 Plug 'kien/ctrlp.vim'
@@ -77,6 +77,8 @@ Plug 'wsdjeg/vim-fetch'
 Plug 'scrooloose/nerdtree'
 Plug 'rhysd/vim-grammarous'
 Plug 'ludovicchabant/vim-gutentags'
+Plug 'chrisjohnson/vim-grep'
+Plug 'markonm/traces.vim'
 call plug#end()
 
 
@@ -91,9 +93,9 @@ silent !test -d ~/.vimrc/.swp || mkdir -p ~/.vim/.{undo,backup,swp}
 "set ttymouse=xterm2
 
 set nocompatible
-"set smartindent
-"set autoindent
-"set tabstop=4
+set smartindent
+set autoindent
+set tabstop=4
 ""set softtabstop=4
 "set expandtab
 "set smarttab
@@ -102,7 +104,7 @@ set nocompatible
 set cursorline
 
 set history=10000
-set autowrite
+"set autowrite
 
 "let g:syntastic_javascript_checkers = ['eslint', 'flow']
 let g:syntastic_javascript_checkers = ['eslint']
@@ -157,10 +159,12 @@ set hlsearch
 " airline
 "set AirlineTheme powerlineish
 let g:airline#extensions#tabline#enabled = 1
-let g:airline_theme='powerlineish'
+let g:airline_theme='minimalist'
 "let g:airline_left_sep=''
 "let g:airline_right_sep=''
 "let g:airline_section_z=''
+
+"set statusline+=:%o
 
 " jsx support (React)
 let g:jsx_ext_required = 0
@@ -233,9 +237,15 @@ nnoremap <C-H> <C-W><C-H>
 au FileType go nmap <Leader>dv <Plug>(go-def-vertical)
 au FileType go nmap <Leader>gd <Plug>(go-def)
 au FileType go nmap <Leader>gt <Plug>(go-def-tab)
+au FileType go nmap <Leader>gs <Plug>(go-def-split)
 au FileType go nmap <Leader>in <Plug>(go-info)
 au FileType go nmap <Leader>e <Plug>(go-rename)
-au FileType go nmap <Leader>s <Plug>(go-implements)
+"au FileType go nmap <Leader>s <Plug>(go-implements)
+au FileType go nmap <Leader>ss <Plug>(go-debug-step)
+au FileType go nmap <Leader>sn <Plug>(go-debug-next)
+au FileType go nmap <Leader>so <Plug>(go-debug-step-out)
+au FileType go nmap <Leader>sc <Plug>(go-debug-continue)
+au FileType go nmap <Leader>sb <Plug>(go-debug-breakpoint)
 
 au Filetype go nmap <leader>ie :GoIfErr <CR>
 
@@ -272,7 +282,7 @@ au FileType typescript nmap <Leader>f :!yarn fix <CR> <CR>
 "autocmd FileType c,cpp,go nested :TagbarOpen
 "autocmd BufEnter * nested :call tagbar#autoopen(0)
 "autocmd VimEnter * nested :call tagbar#autoopen(1)
-" force quickfix to non-tagbar 
+" force quickfix to non-tagbar
 "autocmd FileType qf wincmd J
 
 " js
@@ -339,10 +349,12 @@ smap <C-k>     <Plug>(neosnippet_expand_or_jump)
 xmap <C-k>     <Plug>(neosnippet_expand_target)
 
 "nmap ; :Buffers<CR>
-nmap <Leader>t :Files<CR>
+"nmap <Leader>t :Files<CR>
 nmap <Leader>f :Find<CR>
-nmap <Leader>r :Tags<CR>
+nmap <Leader>t :Tags<CR>
 
-set grepprg=rg\ --vimgrep
+"let greppreg=git\ grep\ -n\ $*
+"set grepprg=rg\ --vimgrep
+let g:vimgrep_rg_command="rg --vimgrep --color=never --no-heading"
 
 command! -bang -nargs=* Find call fzf#vim#grep('rg --column --line-number --no-heading --fixed-strings --ignore-case --no-ignore --hidden --follow --glob "!.git/*" --color "always" '.shellescape(<q-args>), 1, <bang>0)
