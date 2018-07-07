@@ -47,6 +47,7 @@ Plug 'rhysd/vim-grammarous'
 Plug 'ludovicchabant/vim-gutentags'
 Plug 'chrisjohnson/vim-grep'
 Plug 'markonm/traces.vim'
+Plug 'dbeniamine/cheat.sh-vim'
 
 " language support
 Plug 'vim-ruby/vim-ruby'
@@ -343,6 +344,30 @@ let g:neocomplete#sources#syntax#min_keyword_length = 3
 
 let g:tsuquyomi_completion_detail = 1
 autocmd FileType typescript setlocal completeopt+=menu,preview
+
+
+let s:counter = 0
+let s:timer = -1
+
+function! TsBalloonExpr()
+  let s:counter += 1
+  call timer_stop( s:timer )
+  let s:timer = timer_start( 0, 'RealTsBalloonExpr' )
+endfunction
+
+function! RealTsBalloonExpr(timer)
+  echom 'TsBalloonExpr: ' . s:counter
+  call balloon_show(tsuquyomi#balloonexpr())
+endfunction
+
+
+"autocmd FileType typescript setlocal balloonexpr=tsuquyomi#balloonexpr()
+autocmd FileType typescript setlocal balloonexpr=TsBalloonExpr()
+set mouse=a
+set ttymouse=sgr
+set balloondelay=250
+set ballooneval
+set balloonevalterm
 
 " neosnippet:
 imap <C-k>     <Plug>(neosnippet_expand_or_jump)
