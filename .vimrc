@@ -54,7 +54,7 @@ Plug 'Shougo/neosnippet.vim'
 "{{{ experiments
 Plug 'dbeniamine/cheat.sh-vim'
 Plug 'natebosch/vim-lsc'
-Plug 'scrooloose/nerdtree'
+Plug 'tpope/vim-vinegar'
 Plug 'tmc/vimscripts'
 "}}}
 "}}}
@@ -153,9 +153,6 @@ nnoremap <C-H> <C-W><C-H>
 " expand region
 vmap v <Plug>(expand_region_expand)
 vmap <C-v> <Plug>(expand_region_shrink)
-
-" nerdtree
-map <leader>nt :NERDTreeToggle<CR>
 
 " rando
 "nmap ; :Buffers<CR>
