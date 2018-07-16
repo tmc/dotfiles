@@ -54,9 +54,11 @@ Plug 'Shougo/neosnippet.vim'
 "}}}
 "{{{ experiments
 Plug 'dbeniamine/cheat.sh-vim'
+Plug 'kana/vim-textobj-user'
 Plug 'natebosch/vim-lsc'
-Plug 'tpope/vim-vinegar'
+Plug 'somini/vim-textobj-fold'
 Plug 'tmc/vimscripts'
+Plug 'tpope/vim-vinegar'
 "}}}
 "}}}
 
