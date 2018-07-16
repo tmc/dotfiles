@@ -35,6 +35,7 @@ Plug 'chrisjohnson/vim-grep'
 Plug 'ludovicchabant/vim-gutentags'
 Plug 'majutsushi/tagbar'
 Plug 'markonm/traces.vim'
+Plug 'mbbill/undotree'
 Plug 'terryma/vim-expand-region'
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-rhubarb'
@@ -61,25 +62,17 @@ Plug 'tmc/vimscripts'
 
 "{{{ language support
 Plug 'Quramy/tsuquyomi'
-Plug 'derekwyatt/vim-scala'
 Plug 'fatih/vim-go'
 Plug 'gf3/peg.vim'
-Plug 'hashivim/vim-terraform'
-Plug 'lambdatoast/elm.vim'
-Plug 'leafgarland/typescript-vim'
-Plug 'mxw/vim-jsx'
 Plug 'othree/javascript-libraries-syntax.vim'
-Plug 'pangloss/vim-javascript'
 Plug 'rhysd/vim-grammarous'
+Plug 'sheerun/vim-polyglot'
 Plug 'suan/vim-instant-markdown'
-Plug 'tikhomirov/vim-glsl'
 Plug 'tpope/vim-bundler'
 Plug 'tpope/vim-markdown'
 Plug 'tpope/vim-rails'
 Plug 'vadv/vim-chef'
-Plug 'vim-ruby/vim-ruby'
 Plug 'vim-scripts/SWIG-syntax'
-Plug 'vim-scripts/groovy.vim'
 "}}}
 call plug#end()
 "}}}
@@ -92,6 +85,8 @@ set autoindent
 set tabstop=4
 set backspace=indent,eol,start
 
+set path+=**
+
 set history=10000
 
 filetype plugin indent on
@@ -103,6 +98,9 @@ set modeline
 "set t_Co=256
 let g:netrw_liststyle=3
 set bg=dark
+
+set wildmenu
+set wildmode=longest:full,full
 
 set encoding=utf-8
 set laststatus=2
@@ -309,6 +307,8 @@ let g:neocomplete#sources#syntax#min_keyword_length = 3
 " tsuquyomi
 let g:tsuquyomi_completion_detail = 1
 autocmd FileType typescript setlocal completeopt+=menu,preview
+autocmd FileType typescript nmap <buffer> <Leader>t : <C-u>echo tsuquyomi#hint()<CR>
+
 "}}}
 
 " vim:foldmethod=marker foldlevel=1
