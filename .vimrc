@@ -133,6 +133,16 @@ set balloonevalterm
 
 "}}}
 
+"{{{ abbrevations
+"}}}
+
+"{{{ tags conf
+set tags+=./.tags,.tags;
+let g:gutentags_ctags_tagfile = '.tags'
+let g:gutentags_file_list_command = 'git ls-files'
+
+"}}}
+
 "{{{ mappings
 " quickfix
 map <C-n> :cnext<CR>
@@ -254,6 +264,8 @@ au FileType go nmap <Leader>dd <Plug>(go-doc)
 au FileType go nmap <Leader>db <Plug>(go-doc-browser)
 au FileType go nmap <Leader>c <Plug>(go-coverage-toggle)
 au FileType go nmap <Leader>C :GoGoverageBrowser <CR>
+
+au FileType go abb ife if err != nil { return errors.Wrap(err, "") }
 
 "let g:go_metalinter_autosave = 1
 "let g:go_metalinter_autosave_enabled = ['vet']
