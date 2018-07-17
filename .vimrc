@@ -57,8 +57,8 @@ Plug 'dbeniamine/cheat.sh-vim'
 Plug 'kana/vim-textobj-user'
 Plug 'natebosch/vim-lsc'
 Plug 'somini/vim-textobj-fold'
-Plug 'tmc/vimscripts'
 Plug 'tpope/vim-vinegar'
+Plug 'tmc/vimscripts', { 'rtp': 'git-backups', 'as': 'tmc-git-backups' }
 "}}}
 "}}}
 
