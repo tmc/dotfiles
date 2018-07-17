@@ -88,6 +88,7 @@ set tabstop=4
 set backspace=indent,eol,start
 
 set path+=**
+set switchbuf=useopen,usetab
 
 set history=10000
 
@@ -148,7 +149,7 @@ let g:gutentags_file_list_command = 'git ls-files'
 "{{{ mappings
 " quickfix
 map <C-n> :cnext<CR>
-map <C-m> :cprevious<CR>
+map <C-p> :cprevious<CR>
 nnoremap <leader>a :cclose<CR>
 
 " splits
