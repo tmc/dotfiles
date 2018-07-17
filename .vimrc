@@ -181,9 +181,6 @@ xmap <C-k>     <Plug>(neosnippet_expand_target)
 "{{{ plugin configuration
 " airline
 let g:airline_theme='minimalist'
-let g:airline#extensions#tabline#enabled = 1
-"let g:airline_left_sep=''
-"let g:airline_right_sep=''
 "let g:airline_section_z=''
 "set statusline+=:%o
 
