@@ -48,7 +48,8 @@ Plug 'vim-airline/vim-airline-themes'
 "}}}
 
 "{{{ completion+snippets
-Plug 'Shougo/neocomplete.vim'
+"Plug 'Shougo/neocomplete.vim'
+Plug 'lifepillar/vim-mucomplete'
 Plug 'Shougo/neosnippet-snippets'
 Plug 'Shougo/neosnippet.vim'
 "}}}
@@ -59,6 +60,7 @@ Plug 'natebosch/vim-lsc'
 Plug 'somini/vim-textobj-fold'
 Plug 'tpope/vim-vinegar'
 Plug 'tmc/vimscripts', { 'rtp': 'git-backups', 'as': 'tmc-git-backups' }
+Plug 'tmc/vimscripts', { 'rtp': 'mucomplete-neosnippet', 'as': 'tmc-mucomplete-neosnippet' }
 "}}}
 "}}}
 
@@ -151,6 +153,8 @@ let g:gutentags_file_list_command = 'git ls-files'
 map <C-n> :cnext<CR>
 map <C-p> :cprevious<CR>
 nnoremap <leader>a :cclose<CR>
+
+inoremap . .<C-x><C-o>
 
 " splits
 set splitbelow
@@ -297,16 +301,23 @@ autocmd BufNewFile,BufReadPost *.swigcxx set filetype=swig
 "{{{ completion
 set completeopt=longest,menuone
 set omnifunc=syntaxcomplete#Complete
+set completeopt+=noselect
+set completeopt+=noinsert
+
+let g:mucomplete#enable_auto_at_startup = 1
 
 " neocomplete.
-let g:neocomplete#enable_at_startup = 1
-let g:neocomplete#enable_smart_case = 1
-let g:neocomplete#sources#syntax#min_keyword_length = 2
+"let g:neocomplete#enable_at_startup = 1
+"let g:neocomplete#enable_smart_case = 1
+"let g:neocomplete#min_keyword_length = 3
 
 " tsuquyomi
 let g:tsuquyomi_completion_detail = 1
 autocmd FileType typescript setlocal completeopt+=menu,preview
 autocmd FileType typescript nmap <buffer> <Leader>t : <C-u>echo tsuquyomi#hint()<CR>
+
+let g:mucomplete#user_mappings = { 'neosnippet': "\<c-r>=mucomplete_neosnippet#complete()\<cr>" }
+let g:mucomplete#chains = { 'default': ['neosnippet', 'path', 'omni', 'keyn', 'dict', 'uspl'] }
 
 "}}}
 
