@@ -265,8 +265,6 @@ au FileType go nmap <Leader>db <Plug>(go-doc-browser)
 au FileType go nmap <Leader>c <Plug>(go-coverage-toggle)
 au FileType go nmap <Leader>C :GoGoverageBrowser <CR>
 
-au FileType go abb ife if err != nil { return errors.Wrap(err, "") }
-
 "let g:go_metalinter_autosave = 1
 "let g:go_metalinter_autosave_enabled = ['vet']
 
@@ -297,24 +295,13 @@ autocmd BufNewFile,BufReadPost *.swigcxx set filetype=swig
 "}}}
 
 "{{{ completion
-" completion
-"set completeopt=longest,menuone
-"inoremap <expr> <CR> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
-"inoremap <expr> <C-n> pumvisible() ? '<C-n>' :
-"  \ '<C-n><C-r>=pumvisible() ? "\<lt>Down>" : ""<CR>'
-"inoremap <expr> <M-,> pumvisible() ? '<C-n>' :
-"  \ '<C-x><C-o><C-n><C-p><C-r>=pumvisible() ? "\<lt>Down>" : ""<CR>'
+set completeopt=longest,menuone
+set omnifunc=syntaxcomplete#Complete
 
-"set completeopt=longest,menuone,preview
-" Neocomplete
-" Disable AutoComplPop.
-let g:acp_enableAtStartup = 0
-" Use neocomplete.
+" neocomplete.
 let g:neocomplete#enable_at_startup = 1
-" Use smartcase.
 let g:neocomplete#enable_smart_case = 1
-" Set minimum syntax keyword length.
-let g:neocomplete#sources#syntax#min_keyword_length = 3
+let g:neocomplete#sources#syntax#min_keyword_length = 2
 
 " tsuquyomi
 let g:tsuquyomi_completion_detail = 1
