@@ -299,10 +299,13 @@ autocmd BufNewFile,BufReadPost *.swigcxx set filetype=swig
 "}}}
 
 "{{{ completion
-set completeopt=longest,menuone
+set completeopt=menuone
 set omnifunc=syntaxcomplete#Complete
 set completeopt+=noselect
 set completeopt+=noinsert
+set completeopt+=preview
+set shortmess+=c
+set belloff+=ctrlg
 
 let g:mucomplete#enable_auto_at_startup = 1
 
