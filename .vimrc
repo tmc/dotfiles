@@ -59,6 +59,7 @@ Plug 'kana/vim-textobj-user'
 Plug 'natebosch/vim-lsc'
 Plug 'somini/vim-textobj-fold'
 Plug 'tpope/vim-vinegar'
+Plug 'whiteinge/diffconflicts'
 Plug 'tmc/vimscripts', { 'rtp': 'git-backups', 'as': 'tmc-git-backups' }
 Plug 'tmc/vimscripts', { 'rtp': 'mucomplete-neosnippet', 'as': 'tmc-mucomplete-neosnippet' }
 "}}}
