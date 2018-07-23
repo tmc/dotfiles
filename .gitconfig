@@ -71,11 +71,11 @@
     cmd = diffmerge "$LOCAL" "$REMOTE"
 
 [mergetool]
-    keepBackup = false
+	keepBackup = false
 
 [mergetool "diffconflicts"]
-    cmd = diffconflicts vim $BASE $LOCAL $REMOTE $MERGED
-    trustExitCode = true
+	cmd = vim -c DiffConflicts \"$MERGED\" \"$BASE\" \"$LOCAL\" \"$REMOTE\"
+	trustExitCode = true
     keepBackup = false
 [mergetool "diffmerge"]
     cmd = diffmerge --merge --result="$MERGED" "$LOCAL" "$BASE" "$REMOTE"
