@@ -11,11 +11,11 @@ if empty(glob('~/.vim/autoload/plug.vim'))
 endif
 "}}}
 
-"{{{ plugins
+" plugins {{{
 call plug#begin()
 Plug 'junegunn/vim-plug'
-"{{{ core plugins
-"{{{ fundamentals
+" core plugins {{{
+" fundamentals {{{
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
 Plug 'kien/ctrlp.vim'
@@ -29,7 +29,7 @@ Plug 'wsdjeg/vim-fetch'
 "Plug 'tpope/vim-sensible'
 "Plug 'tpope/vim-dispatch'
 "}}}
-"{{{ tools
+" tools {{{
 Plug 'Shougo/vinarise.vim'
 Plug 'chrisjohnson/vim-grep'
 Plug 'ludovicchabant/vim-gutentags'
@@ -40,20 +40,20 @@ Plug 'terryma/vim-expand-region'
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-rhubarb'
 "}}}
-"{{{ flair
+" flair {{{
 Plug 'airblade/vim-gitgutter'
 Plug 'nanotech/jellybeans.vim'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 "}}}
 
-"{{{ completion+snippets
+" completion+snippets {{{
 "Plug 'Shougo/neocomplete.vim'
 Plug 'lifepillar/vim-mucomplete'
 Plug 'Shougo/neosnippet-snippets'
 Plug 'Shougo/neosnippet.vim'
 "}}}
-"{{{ experiments
+" experiments {{{
 Plug 'dbeniamine/cheat.sh-vim'
 Plug 'kana/vim-textobj-user'
 Plug 'natebosch/vim-lsc'
@@ -66,7 +66,7 @@ Plug 'w0rp/ale'
 "}}}
 "}}}
 
-"{{{ language support
+" language support {{{
 Plug 'Quramy/tsuquyomi'
 Plug 'fatih/vim-go'
 Plug 'gf3/peg.vim'
@@ -83,7 +83,7 @@ Plug 'vim-scripts/SWIG-syntax'
 call plug#end()
 "}}}
 
-"{{{ basics
+" basics {{{
 " basics
 set nocompatible
 set smartindent
@@ -140,17 +140,17 @@ silent! set balloonevalterm
 
 "}}}
 
-"{{{ abbrevations
+" abbrevations {{{
 "}}}
 
-"{{{ tags conf
+" tags conf {{{
 set tags+=./.tags,.tags;
 let g:gutentags_ctags_tagfile = '.tags'
 let g:gutentags_file_list_command = 'git ls-files'
 
 "}}}
 
-"{{{ mappings
+" mappings {{{
 " quickfix
 map <C-n> :cnext<CR>
 map <C-p> :cprevious<CR>
@@ -184,7 +184,7 @@ xmap <C-k>     <Plug>(neosnippet_expand_target)
 
 "}}}
 
-"{{{ plugin configuration
+" plugin configuration {{{
 " ale
 "let g:ale_python_flake8_args="--ignore=E501"
 let g:ale_linters = {'python': ['flake8']}
@@ -222,7 +222,7 @@ command! -bang -nargs=* Find call fzf#vim#grep('rg --column --line-number --no-h
 "let g:lsc_auto_map = v:true " Use defaults
 "}}}
 
-"{{{ language support
+" language support {{{
 
 " jsx support
 let g:jsx_ext_required = 0
@@ -235,7 +235,7 @@ autocmd FileType ruby,eruby let g:rubycomplete_buffer_loading = 1
 autocmd FileType ruby,eruby let g:rubycomplete_classes_in_global = 1
 autocmd FileType ruby,eruby let g:rubycomplete_rails = 1
 
-"{{{ go
+" go {{{
 au BufNewFile,BufRead *.go setlocal noet ts=4 sw=4 sts=4
 let g:go_fmt_command = "goimports"
 let g:go_highlight_functions = 1
@@ -309,7 +309,7 @@ autocmd BufNewFile,BufReadPost *.swigcxx set filetype=swig
 "}}}
 "}}}
 
-"{{{ completion
+" completion {{{
 set completeopt=menuone
 set omnifunc=syntaxcomplete#Complete
 set completeopt+=noselect
