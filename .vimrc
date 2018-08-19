@@ -58,10 +58,11 @@ Plug 'dbeniamine/cheat.sh-vim'
 Plug 'kana/vim-textobj-user'
 Plug 'natebosch/vim-lsc'
 Plug 'somini/vim-textobj-fold'
-Plug 'tpope/vim-vinegar'
+"Plug 'tpope/vim-vinegar'
 Plug 'whiteinge/diffconflicts'
 Plug 'tmc/vimscripts', { 'rtp': 'git-backups', 'as': 'tmc-git-backups' }
 Plug 'tmc/vimscripts', { 'rtp': 'mucomplete-neosnippet', 'as': 'tmc-mucomplete-neosnippet' }
+Plug 'w0rp/ale'
 "}}}
 "}}}
 
@@ -134,8 +135,8 @@ set synmaxcol=128
 "match OverLength /\%81v.\+/
 
 " balloons! (kinda buggy)
-set ballooneval
-set balloonevalterm
+silent! set ballooneval
+silent! set balloonevalterm
 
 "}}}
 
@@ -184,6 +185,11 @@ xmap <C-k>     <Plug>(neosnippet_expand_target)
 "}}}
 
 "{{{ plugin configuration
+" ale
+"let g:ale_python_flake8_args="--ignore=E501"
+let g:ale_linters = {'python': ['flake8']}
+let g:ale_python_flake8_change_directory = 0
+
 " airline
 let g:airline_theme='minimalist'
 "let g:airline_section_z=''
@@ -203,13 +209,17 @@ let g:ctrlp_prompt_mappings = {
     \ 'AcceptSelection("e")': ['<space>', '<cr>', '<2-LeftMouse>'],
     \ }
 
+" mu
+nnoremap <leader>m :MUcompleteAutoToggle<CR>
+let g:mucomplete#delayed_completion = 1
+
 " rg
 let g:vimgrep_rg_command="rg --vimgrep --color=never --no-heading"
 command! -bang -nargs=* Find call fzf#vim#grep('rg --column --line-number --no-heading --fixed-strings --ignore-case --no-ignore --hidden --follow --glob "!.git/*" --color "always" '.shellescape(<q-args>), 1, <bang>0)
 
 " language server
-let g:lsc_server_commands = {'python': 'pyls'}
-let g:lsc_auto_map = v:true " Use defaults
+"let g:lsc_server_commands = {'python': 'pyls'}
+"let g:lsc_auto_map = v:true " Use defaults
 "}}}
 
 "{{{ language support
