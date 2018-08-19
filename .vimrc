@@ -118,9 +118,9 @@ set number
 " undo,backup,swap
 set swapfile
 set undofile
-set undodir=~/.vim/.undo//
-set backupdir=~/.vim/.backup//
-set directory=~/.vim/.swp//
+set undodir=~/.vim/.undo/
+set backupdir=~/.vim/.backup/
+set directory=~/.vim/.swp/
 silent !test -d ~/.vimrc/.swp || mkdir -p ~/.vim/.{undo,backup,swp}
 
 set scrolloff=5
@@ -134,6 +134,8 @@ set synmaxcol=128
 " 80 col highlight
 "highlight OverLength ctermbg=red ctermfg=white guibg=#592929
 "match OverLength /\%81v.\+/
+
+set foldcolumn=3
 
 " balloons! (kinda buggy)
 silent! set ballooneval
