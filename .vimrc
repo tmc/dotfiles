@@ -149,7 +149,8 @@ silent! set balloonevalterm
 " tags conf {{{
 set tags+=./.tags,.tags;
 let g:gutentags_ctags_tagfile = '.tags'
-let g:gutentags_file_list_command = 'git ls-files'
+"let g:gutentags_file_list_command = 'git ls-files'
+let g:gutentags_ctags_extra_args = system(python -c "import os, sys; print(' '.join('{}'.format(d) for d in sys.path if os.path.isdir(d)))")
 
 "}}}
 
@@ -314,19 +315,18 @@ autocmd BufNewFile,BufReadPost *.swigcxx set filetype=swig
 
 " completion {{{
 set completeopt=menuone
-set omnifunc=syntaxcomplete#Complete
 set completeopt+=noselect
 set completeopt+=noinsert
 set completeopt+=preview
 set shortmess+=c
 set belloff+=ctrlg
 
-let g:mucomplete#enable_auto_at_startup = 1
+autocmd Filetype *
+        \	if &omnifunc == "" |
+        \		setlocal omnifunc=syntaxcomplete#Complete |
+        \	endif
 
-" neocomplete.
-"let g:neocomplete#enable_at_startup = 1
-"let g:neocomplete#enable_smart_case = 1
-"let g:neocomplete#min_keyword_length = 3
+let g:mucomplete#enable_auto_at_startup = 1
 
 " tsuquyomi
 let g:tsuquyomi_completion_detail = 1
