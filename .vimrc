@@ -56,7 +56,8 @@ Plug 'Shougo/neosnippet.vim'
 " experiments {{{
 Plug 'dbeniamine/cheat.sh-vim'
 Plug 'kana/vim-textobj-user'
-Plug 'natebosch/vim-lsc'
+Plug 'prabirshrestha/async.vim'
+Plug 'prabirshrestha/vim-lsp'
 Plug 'pedrohdz/vim-yaml-folds'
 Plug 'somini/vim-textobj-fold'
 "Plug 'tpope/vim-vinegar'
@@ -64,6 +65,7 @@ Plug 'whiteinge/diffconflicts'
 Plug 'tmc/vimscripts', { 'rtp': 'git-backups', 'as': 'tmc-git-backups' }
 Plug 'tmc/vimscripts', { 'rtp': 'mucomplete-neosnippet', 'as': 'tmc-mucomplete-neosnippet' }
 Plug 'w0rp/ale'
+Plug 'vim-scripts/dbext.vim'
 "}}}
 "}}}
 
@@ -186,18 +188,28 @@ imap <C-k>     <Plug>(neosnippet_expand_or_jump)
 smap <C-k>     <Plug>(neosnippet_expand_or_jump)
 xmap <C-k>     <Plug>(neosnippet_expand_target)
 
+let g:netrw_http_xcmd='-s -n -o'
 "}}}
 
 " plugin configuration {{{
 " ale
+let g:ale_completion_enabled = 1
 "let g:ale_python_flake8_args="--ignore=E501"
-let g:ale_linters = {'python': ['flake8']}
-let g:ale_python_flake8_change_directory = 0
+"let g:ale_linters = {'python': ['flake8', 'pyls']}
+let g:ale_linters = {
+\  'python': ['pyls'],
+\  'typescript': ['tsserver', 'typecheck'],
+\}
+let g:ale_fixers = {
+\  'sh': ['shfmt'],
+\}
+"let g:ale_python_flake8_change_directory = 0
+let g:airline#extensions#ale#enabled = 1
 
 " airline
 let g:airline_theme='minimalist'
-"let g:airline_section_z=''
-"set statusline+=:%o
+let g:airline_section_z=''
+set statusline+=:%o
 
 " gitgutter
 let g:gitgutter_realtime = 0
