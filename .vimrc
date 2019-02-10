@@ -26,8 +26,8 @@ Plug 'tpope/vim-sleuth'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-unimpaired'
 Plug 'wsdjeg/vim-fetch'
+Plug 'tpope/vim-dispatch'
 "Plug 'tpope/vim-sensible'
-"Plug 'tpope/vim-dispatch'
 "}}}
 " tools {{{
 Plug 'Shougo/vinarise.vim'
@@ -46,31 +46,35 @@ Plug 'nanotech/jellybeans.vim'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 "}}}
-
+"
 " completion+snippets {{{
 "Plug 'Shougo/neocomplete.vim'
-Plug 'lifepillar/vim-mucomplete'
+"Plug 'lifepillar/vim-mucomplete'
 Plug 'Shougo/neosnippet-snippets'
 Plug 'Shougo/neosnippet.vim'
 "}}}
-" experiments {{{
-Plug 'dbeniamine/cheat.sh-vim'
+"" experiments {{{
+"Plug 'dbeniamine/cheat.sh-vim'
 Plug 'kana/vim-textobj-user'
-Plug 'prabirshrestha/async.vim'
-Plug 'prabirshrestha/vim-lsp'
+"Plug 'prabirshrestha/async.vim'
+"Plug 'prabirshrestha/vim-lsp'
 Plug 'pedrohdz/vim-yaml-folds'
 Plug 'somini/vim-textobj-fold'
-"Plug 'tpope/vim-vinegar'
+Plug 'google/vim-maktaba'
+Plug 'bazelbuild/vim-bazel'
+""Plug 'broesler/jupyter-vim'
+""Plug 'tpope/vim-vinegar'
 Plug 'whiteinge/diffconflicts'
 Plug 'tmc/vimscripts', { 'rtp': 'git-backups', 'as': 'tmc-git-backups' }
-Plug 'tmc/vimscripts', { 'rtp': 'mucomplete-neosnippet', 'as': 'tmc-mucomplete-neosnippet' }
+"Plug 'tmc/vimscripts', { 'rtp': 'mucomplete-neosnippet', 'as': 'tmc-mucomplete-neosnippet' }
 Plug 'w0rp/ale'
 Plug 'vim-scripts/dbext.vim'
-"}}}
-"}}}
-
+Plug 'hashivim/vim-terraform'
+""}}}
+""}}}
+"
 " language support {{{
-Plug 'Quramy/tsuquyomi'
+"Plug 'Quramy/tsuquyomi'
 Plug 'fatih/vim-go'
 Plug 'gf3/peg.vim'
 Plug 'othree/javascript-libraries-syntax.vim'
@@ -94,11 +98,12 @@ set autoindent
 set tabstop=4
 set backspace=indent,eol,start
 
+
 set path+=**
 set switchbuf=useopen,usetab
 
 set history=10000
-
+set cryptmethod=blowfish2
 filetype plugin indent on
 
 silent! colorscheme jellybeans
@@ -140,9 +145,37 @@ set synmaxcol=128
 set foldcolumn=3
 
 " balloons! (kinda buggy)
-silent! set ballooneval
-silent! set balloonevalterm
 
+" balloon fixes {{{
+" see https://github.com/vim/vim/issues/2481
+let s:counter = 0
+let s:timer = -1
+
+function! MyBalloonExpr()
+  let s:counter += 1
+  call timer_stop( s:timer )
+  let s:message =
+          \ 'Cursor is at line ' . v:beval_lnum .
+          \ 'Cursor is at line ' . v:beval_lnum .
+          \', column ' . v:beval_col .
+          \ ' of file ' .  bufname(v:beval_bufnr) .
+          \ ' on word "' . v:beval_text . '"'
+  let s:timer = timer_start( 0, 'RealBalloonExpr' )
+endfunction
+
+function! RealBalloonExpr(timer)
+  echom 'MyBalloonExpr: ' . s:counter
+  call balloon_show( s:message )
+endfunction
+"}}}
+
+let g:ale_ale_set_balloons=1
+set mouse=a
+set ttymouse=sgr
+set balloondelay=200
+"set balloonexpr=MyBalloonExpr()
+set ballooneval
+set balloonevalterm
 "}}}
 
 " abbrevations {{{
@@ -152,7 +185,7 @@ silent! set balloonevalterm
 set tags+=./.tags,.tags;
 let g:gutentags_ctags_tagfile = '.tags'
 "let g:gutentags_file_list_command = 'git ls-files'
-let g:gutentags_ctags_extra_args = system(python -c "import os, sys; print(' '.join('{}'.format(d) for d in sys.path if os.path.isdir(d)))")
+"let g:gutentags_ctags_extra_args = [system("python -c \"import os, sys; print(' '.join('{}'.format(d) for d in sys.path if os.path.isdir(d)))\"")]
 
 "}}}
 
@@ -172,6 +205,32 @@ nnoremap <C-J> <C-W><C-J>
 nnoremap <C-K> <C-W><C-K>
 nnoremap <C-L> <C-W><C-L>
 nnoremap <C-H> <C-W><C-H>
+
+
+"
+function! OpenJSONLink()
+  normal! :vsgf
+  set filetype=json
+  set foldmethod=syntax
+  set foldlevel=2
+endfunction
+nnoremap <Leader>gj :call OpenJSONLink()<CR>
+
+function! ViewHtmlText(url)
+  if !empty(a:url)
+    new
+    setlocal buftype=nofile bufhidden=hide noswapfile
+    execute 'r !elinks ' . a:url . ' -dump -dump-width ' . winwidth(0)
+    1d
+  endif
+endfunction
+" Save and view text for current html file.
+nnoremap <Leader>H :update<Bar>call ViewHtmlText(expand('%:p'))<CR>
+" View text for visually selected url.
+vnoremap <Leader>h y:call ViewHtmlText(@@)<CR>
+" View text for URL from clipboard.
+" On Linux, use @* for current selection or @+ for text in clipboard.
+nnoremap <Leader>h :call ViewHtmlText(@+)<CR>
 
 " expand region
 vmap v <Plug>(expand_region_expand)
@@ -193,23 +252,32 @@ let g:netrw_http_xcmd='-s -n -o'
 
 " plugin configuration {{{
 " ale
-let g:ale_completion_enabled = 1
+let g:ale_completion_enabled=1
 "let g:ale_python_flake8_args="--ignore=E501"
+"let g:ale_python_pyls_use_global=1
 "let g:ale_linters = {'python': ['flake8', 'pyls']}
+let g:ale_python_pyls_executable='pyls'
 let g:ale_linters = {
 \  'python': ['pyls'],
-\  'typescript': ['tsserver', 'typecheck'],
+\  'typescript': ['tsserver', 'typecheck', 'tslint'],
 \}
 let g:ale_fixers = {
-\  'sh': ['shfmt'],
+\  'typescript': ['tslint'],
 \}
+"\  'typescript': ['eslint','prettier','tslint', 'trim_whitespace'],
+"\  'sh': ['shfmt'],
+let g:ale_fix_on_save=1
+let g:ale_history_enabled = 1
+let g:ale_history_log_output = 1
 "let g:ale_python_flake8_change_directory = 0
 let g:airline#extensions#ale#enabled = 1
 
 " airline
 let g:airline_theme='minimalist'
 let g:airline_section_z=''
-set statusline+=:%o
+let g:airline#extensions#tabline#enabled = 1
+let g:airline#extensions#tabline#formatter = 'unique_tail_improved'
+"set statusline+=:%o
 
 " gitgutter
 let g:gitgutter_realtime = 0
@@ -226,8 +294,25 @@ let g:ctrlp_prompt_mappings = {
     \ }
 
 " mu
-nnoremap <leader>m :MUcompleteAutoToggle<CR>
-let g:mucomplete#delayed_completion = 1
+"nnoremap <leader>mu :MUcompleteAutoToggle<CR>
+"let g:mucomplete#completion_delay = 800
+
+"if executable('typescript-language-server')
+"    au User lsp_setup call lsp#register_server({
+"        \ 'name': 'typescript-language-server',
+"        \ 'cmd': {server_info->[&shell, &shellcmdflag, 'typescript-language-server --stdio']},
+"        \ 'root_uri':{server_info->lsp#utils#path_to_uri(lsp#utils#find_nearest_parent_file_directory(lsp#utils#get_buffer_path(), 'tsconfig.json'))},
+"        \ 'whitelist': ['typescript'],
+"        \ })
+"endif
+"if executable('pyls')
+"    au User lsp_setup call lsp#register_server({
+"        \ 'name': 'pyls',
+"        \ 'cmd': {server_info->['pyls']},
+"        \ 'whitelist': ['python'],
+"        \ 'workspace_config': {'pyls': {'plugins': {'jedi_definition': {'follow_imports': 'true'}}}}
+"        \ })
+"endif
 
 " rg
 let g:vimgrep_rg_command="rg --vimgrep --color=never --no-heading"
@@ -253,7 +338,7 @@ autocmd FileType ruby,eruby let g:rubycomplete_rails = 1
 
 " go {{{
 au BufNewFile,BufRead *.go setlocal noet ts=4 sw=4 sts=4
-let g:go_fmt_command = "goimports"
+"let g:go_fmt_command = "goimports"
 let g:go_highlight_functions = 1
 let g:go_highlight_methods = 1
 let g:go_highlight_fields = 1
@@ -305,10 +390,12 @@ let g:go_auto_sameids = 1
 au FileType javascript.jsx nmap <Leader>f :!$(npm bin)/eslint --fix % <CR>
 
 " typescript
-au FileType typescript nmap <Leader>gd :TsuDefinition <CR>
-au FileType typescript nmap <Leader>gt :tabe % <CR> <Bar> :sleep 1 <Bar> :TsuDefinition <CR>
+"au FileType typescript nmap <Leader>gd :TsuDefinition <CR>
 au FileType typescript nmap <Leader>gs :vsplit <CR> <Bar> :sleep 1 <Bar> :TsuDefinition <CR>
 au FileType typescript nmap <Leader>f :!yarn fix <CR> <CR>
+
+"nmap <Leader>gd :LspDefinition <CR>
+nmap <Leader>gd :ALEGoToDefinition <CR>
 
 " js
 au FileType javascript.jsx nmap <Leader>dd :TernDef<CR>
@@ -326,6 +413,8 @@ autocmd BufNewFile,BufReadPost *.swigcxx set filetype=swig
 "}}}
 
 " completion {{{
+" filetype plugin on
+set omnifunc=syntaxcomplete#Complete
 set completeopt=menuone
 set completeopt+=noselect
 set completeopt+=noinsert
@@ -333,12 +422,12 @@ set completeopt+=preview
 set shortmess+=c
 set belloff+=ctrlg
 
-autocmd Filetype *
-        \	if &omnifunc == "" |
-        \		setlocal omnifunc=syntaxcomplete#Complete |
-        \	endif
+"autocmd Filetype *
+"        \	if &omnifunc == "" |
+"        \		setlocal omnifunc=syntaxcomplete#Complete |
+"        \	endif
 
-let g:mucomplete#enable_auto_at_startup = 1
+"let g:mucomplete#enable_auto_at_startup = 1
 
 " tsuquyomi
 let g:tsuquyomi_completion_detail = 1
