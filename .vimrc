@@ -54,7 +54,7 @@ Plug 'Shougo/neosnippet-snippets'
 Plug 'Shougo/neosnippet.vim'
 "}}}
 "" experiments {{{
-"Plug 'dbeniamine/cheat.sh-vim'
+Plug 'dbeniamine/cheat.sh-vim'
 Plug 'kana/vim-textobj-user'
 "Plug 'prabirshrestha/async.vim'
 "Plug 'prabirshrestha/vim-lsp'
@@ -128,7 +128,11 @@ set undofile
 set undodir=~/.vim/.undo/
 set backupdir=~/.vim/.backup/
 set directory=~/.vim/.swp/
-silent !test -d ~/.vimrc/.swp || mkdir -p ~/.vim/.{undo,backup,swp}
+if !isdirectory("~/.vim/.swp")
+    silent !mkdir ~/.vim/.swp > /dev/null 2>&1
+    silent !mkdir ~/.vim/.undo > /dev/null 2>&1
+    silent !mkdir ~/.vim/.backup > /dev/null 2>&1
+endif
 
 set scrolloff=5
 
@@ -136,46 +140,28 @@ set hlsearch
 set incsearch
 "slient! execute 'source .vimrclocal'
 
+packadd! matchit
+
 " color to col 128
 set synmaxcol=128
 " 80 col highlight
-"highlight OverLength ctermbg=red ctermfg=white guibg=#592929
-"match OverLength /\%81v.\+/
+highlight OverLength ctermbg=black ctermfg=white guibg=#592929
+match OverLength /\%101v.\+/
 
 set foldcolumn=3
+set foldlevel=2
 
-" balloons! (kinda buggy)
+" }}}
 
-" balloon fixes {{{
-" see https://github.com/vim/vim/issues/2481
-let s:counter = 0
-let s:timer = -1
-
-function! MyBalloonExpr()
-  let s:counter += 1
-  call timer_stop( s:timer )
-  let s:message =
-          \ 'Cursor is at line ' . v:beval_lnum .
-          \ 'Cursor is at line ' . v:beval_lnum .
-          \', column ' . v:beval_col .
-          \ ' of file ' .  bufname(v:beval_bufnr) .
-          \ ' on word "' . v:beval_text . '"'
-  let s:timer = timer_start( 0, 'RealBalloonExpr' )
-endfunction
-
-function! RealBalloonExpr(timer)
-  echom 'MyBalloonExpr: ' . s:counter
-  call balloon_show( s:message )
-endfunction
-"}}}
-
-let g:ale_ale_set_balloons=1
+" balloons {{{
 set mouse=a
+silent set ballooneval
+silent set balloonevalterm
 set ttymouse=sgr
-set balloondelay=200
-"set balloonexpr=MyBalloonExpr()
-set ballooneval
-set balloonevalterm
+"set balloonexpr=go#tool#DescribeBalloon()
+set balloondelay=150
+
+let g:ale_set_balloons=1
 "}}}
 
 " abbrevations {{{
@@ -258,6 +244,7 @@ let g:ale_completion_enabled=1
 "let g:ale_linters = {'python': ['flake8', 'pyls']}
 let g:ale_python_pyls_executable='pyls'
 let g:ale_linters = {
+\  'go': ['gofmt', 'golint', 'govet', 'gopls'],
 \  'python': ['pyls'],
 \  'typescript': ['tsserver', 'typecheck', 'tslint'],
 \}
@@ -338,7 +325,7 @@ autocmd FileType ruby,eruby let g:rubycomplete_rails = 1
 
 " go {{{
 au BufNewFile,BufRead *.go setlocal noet ts=4 sw=4 sts=4
-"let g:go_fmt_command = "goimports"
+let g:go_fmt_command = "goimports"
 let g:go_highlight_functions = 1
 let g:go_highlight_methods = 1
 let g:go_highlight_fields = 1
@@ -406,6 +393,8 @@ let vim_markdown_preview_github=1
 let vim_markdown_preview_hotkey='<C-m>'
 "let g:vim_markdown_folding_disabled = 1
 autocmd BufNewFile,BufReadPost *.md set filetype=markdown
+autocmd BufRead,BufNewFile *.md setlocal textwidth=100
+
 
 " swig
 autocmd BufNewFile,BufReadPost *.swigcxx set filetype=swig
