@@ -92,8 +92,9 @@
 	oldHighlight = red bold 52
 	newNormal = green bold
 	newHighlight = green bold 22
-[commit]
-	gpgsign = true
+
+#[commit]
+#	gpgsign = true
 
 [http]
 	cookiefile = /Users/tmc/.gitcookies
