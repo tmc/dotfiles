@@ -110,7 +110,7 @@ silent! colorscheme jellybeans
 set cursorline
 set ruler
 set modeline
-"set t_Co=256
+set t_Co=256
 let g:netrw_liststyle=3
 set bg=dark
 

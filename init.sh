@@ -1,6 +1,6 @@
 #!/bin/bash
-set -euo pipefail
-# curl https://raw.githubusercontent.com/tmc/dotfiles/master/init.sh | bash -x
+set -eu
+# curl https://raw.githubusercontent.com/tmc/dotfiles/master/init.sh | sh -x
 test -f .bashrc && cp .bashrc .bashrc-$(date +%s)
 test -f .vimrc && cp .vimrc .vimrc-$(date +%s)
 test -f .gitconfig && cp .gitconfig .gitconfig-$(date +%s)
