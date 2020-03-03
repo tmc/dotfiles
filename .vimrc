@@ -64,12 +64,16 @@ Plug 'google/vim-maktaba'
 Plug 'bazelbuild/vim-bazel'
 ""Plug 'broesler/jupyter-vim'
 ""Plug 'tpope/vim-vinegar'
+Plug 'michaeljsmith/vim-indent-object'
+Plug 'rhysd/git-messenger.vim'
 Plug 'whiteinge/diffconflicts'
 Plug 'tmc/vimscripts', { 'rtp': 'git-backups', 'as': 'tmc-git-backups' }
 "Plug 'tmc/vimscripts', { 'rtp': 'mucomplete-neosnippet', 'as': 'tmc-mucomplete-neosnippet' }
 Plug 'w0rp/ale'
 Plug 'vim-scripts/dbext.vim'
 Plug 'hashivim/vim-terraform'
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
+
 ""}}}
 ""}}}
 "
@@ -105,6 +109,8 @@ set switchbuf=useopen,usetab
 set history=10000
 set cryptmethod=blowfish2
 filetype plugin indent on
+
+set updatetime=500
 
 silent! colorscheme jellybeans
 set cursorline
@@ -183,6 +189,15 @@ nnoremap <leader>a :cclose<CR>
 
 inoremap . .<C-x><C-o>
 
+" OS keyboard yanking
+" nnoremap map Y "+y
+vmap <Leader>y "+y
+vmap <Leader>p "+p
+nnoremap <Leader>y "+yy
+nnoremap <Leader>p "+p
+nnoremap <Leader>Y "*y
+nnoremap <Leader>P "*p
+
 " splits
 set splitbelow
 set splitright
@@ -191,6 +206,12 @@ nnoremap <C-J> <C-W><C-J>
 nnoremap <C-K> <C-W><C-K>
 nnoremap <C-L> <C-W><C-L>
 nnoremap <C-H> <C-W><C-H>
+
+
+nmap <leader>gn <plug>gitgutternexthunk  " git next
+nmap <leader>gp <plug>gitgutterprevhunk  " git previous
+nmap <Leader>ga <Plug>GitGutterStageHunk  " git add (chunk)
+nmap <Leader>gu <Plug>GitGutterUndoHunk   " git undo (chunk)
 
 
 "
@@ -243,6 +264,8 @@ let g:ale_completion_enabled=1
 "let g:ale_python_pyls_use_global=1
 "let g:ale_linters = {'python': ['flake8', 'pyls']}
 let g:ale_python_pyls_executable='pyls'
+let g:go_def_mode='gopls'
+let g:go_info_mode='gopls'
 let g:ale_linters = {
 \  'go': ['gofmt', 'golint', 'govet', 'gopls'],
 \  'python': ['pyls'],
@@ -250,6 +273,10 @@ let g:ale_linters = {
 \}
 let g:ale_fixers = {
 \  'typescript': ['tslint'],
+\  'java': ['google_java_format'],
+\  'javascript': ['eslint', 'prettier'],
+\  'javascript.jsx': ['eslint', 'prettier'],
+\  'jsx': ['eslint', 'prettier'],
 \}
 "\  'typescript': ['eslint','prettier','tslint', 'trim_whitespace'],
 "\  'sh': ['shfmt'],
@@ -395,6 +422,8 @@ let vim_markdown_preview_hotkey='<C-m>'
 autocmd BufNewFile,BufReadPost *.md set filetype=markdown
 autocmd BufRead,BufNewFile *.md setlocal textwidth=100
 
+autocmd BufNewFile,BufReadPost Tiltfile set filetype=python
+autocmd BufNewFile,BufReadPost Tiltfile.* set filetype=python
 
 " swig
 autocmd BufNewFile,BufReadPost *.swigcxx set filetype=swig
