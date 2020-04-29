@@ -34,7 +34,7 @@ Plug 'mbbill/undotree'
 Plug 'terryma/vim-expand-region'
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-rhubarb'
-"Plug 'ludovicchabant/vim-gutentags'
+Plug 'ludovicchabant/vim-gutentags'
 "}}}
 " flair {{{
 Plug 'airblade/vim-gitgutter'
@@ -135,6 +135,8 @@ set synmaxcol=128
 " folds
 set foldcolumn=3
 set foldlevel=2
+
+set mouse=a
 " }}}
 "
 " completion {{{
@@ -200,6 +202,7 @@ let g:ale_completion_enabled=1
 let g:ale_python_pyls_executable='pyls'
 let g:go_def_mode='gopls'
 let g:go_info_mode='gopls'
+let g:go_doc_url='https://pkg.go.dev/'
 let g:ale_linters = {
 \  'go': ['gofmt', 'golint', 'govet', 'gopls'],
 \  'cpp': ['clang'],
