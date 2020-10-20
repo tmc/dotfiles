@@ -1,6 +1,6 @@
-\set QUIET 1
+-- \set QUIET 1
 -- formatting
-\x auto
+-- \x auto
 
 -- \set VERBOSITY verbose
 \set ON_ERROR_ROLLBACK interactive
@@ -22,7 +22,7 @@
 
 
 
---logging
+-- logging
 -- Use a separate history file per-database.
 \set HISTFILE ~/.psql_history- :DBNAME
 -- If a command is run more than once in a row, only store it once in the
@@ -79,4 +79,7 @@
 \set clear '\\! clear;'
 \set ll '\\! ls -lrt;'
 
-\unset QUIET
+\set export_jobs 'select * from job_request where job_type=''export'';'
+\set clear_export_jobs 'delete from job_request where job_type=''export'';'
+
+-- \unset QUIET

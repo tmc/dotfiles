@@ -48,19 +48,21 @@ Plug 'Shougo/neosnippet.vim'
 "Plug 'Shougo/neocomplete.vim'
 "}}}
 " experiments {{{
-Plug 'dbeniamine/cheat.sh-vim'
-Plug 'kana/vim-textobj-user'
-Plug 'pedrohdz/vim-yaml-folds'
-Plug 'somini/vim-textobj-fold'
-Plug 'google/vim-maktaba'
 Plug 'bazelbuild/vim-bazel'
-Plug 'michaeljsmith/vim-indent-object'
-Plug 'rhysd/git-messenger.vim'
-Plug 'whiteinge/diffconflicts'
-Plug 'tmc/vimscripts', { 'rtp': 'git-backups', 'as': 'tmc-git-backups' }
-Plug 'w0rp/ale'
-Plug 'vim-scripts/dbext.vim'
+Plug 'junegunn/fzf.vim'
+"Plug 'dbeniamine/cheat.sh-vim'
+Plug 'google/vim-maktaba'
 Plug 'hashivim/vim-terraform'
+Plug 'kana/vim-textobj-user'
+Plug 'michaeljsmith/vim-indent-object'
+Plug 'pedrohdz/vim-yaml-folds'
+Plug 'rhysd/git-messenger.vim'
+Plug 'somini/vim-textobj-fold'
+Plug 'tmc/vimscripts', { 'rtp': 'git-backups', 'as': 'tmc-git-backups' }
+Plug 'vim-scripts/dbext.vim'
+Plug 'dense-analysis/ale'
+Plug 'bufbuild/vim-buf'
+Plug 'whiteinge/diffconflicts'
 " Plug 'neoclide/coc.nvim', {'branch': 'release'}
 ""}}}
 
@@ -106,6 +108,7 @@ set number
 
 " undo,backup,swap
 set swapfile
+set noswapfile
 set undofile
 set undodir=~/.vim/.undo/
 set backupdir=~/.vim/.backup/
@@ -185,7 +188,11 @@ imap <C-k>     <Plug>(neosnippet_expand_or_jump)
 smap <C-k>     <Plug>(neosnippet_expand_or_jump)
 xmap <C-k>     <Plug>(neosnippet_expand_target)
 
-let g:netrw_http_xcmd='-s -n -o'
+vnoremap <leader>p :<C-U>ShadenPatchSelection<CR>
+nnoremap <leader>p :<C-U>ShadenPatchLine<CR>
+nnoremap <leader>r :<C-U>ShadenRepatch<CR>
+
+" let g:netrw_http_xcmd='-s -n -o'
 "}}}
 
 " abbrevations {{{
@@ -193,7 +200,9 @@ let g:netrw_http_xcmd='-s -n -o'
 
 " tags {{{
 set tags+=./.tags,.tags;
-" let g:gutentags_ctags_tagfile = '.tags'
+let g:gutentags_ctags_tagfile = '.tags'
+let g:gutentags_cache_dir = '~/.vim/tags'
+
 "}}}
 
 " plugin configuration {{{
@@ -208,6 +217,7 @@ let g:ale_linters = {
 \  'cpp': ['clang'],
 \  'python': ['pyls'],
 \  'typescript': ['tsserver', 'typecheck', 'tslint'],
+\  'proto': ['buf-check-lint',],
 \}
 let g:ale_fixers = {
 \  'typescript': ['tslint'],
@@ -296,6 +306,18 @@ autocmd BufNewFile,BufReadPost Tiltfile.* set filetype=python
 
 " swig
 autocmd BufNewFile,BufReadPost *.swigcxx set filetype=swig
+
+" yaml
+" For github.com/miekg/yamlfmt
+au FileType yaml command! Fmt call YamlFmt(120)
+let yaml_fmt = "yamlfmt /dev/stdin"
+au FileType yaml let &l:formatprg=yaml_fmt
+
+" helm
+au FileType helm command! Fmt call YamlFmt(120)
+let yaml_fmt = "yamlfmt /dev/stdin"
+au FileType helm let &l:formatprg=yaml_fmt
+
 "}}}
 
 " vim:foldmethod=marker foldlevel=1
