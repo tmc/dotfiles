@@ -1,0 +1,69 @@
+# shell aliases
+
+alias t="cd ~/go/src/github.com/tmc"
+alias pa="cd ~/code/participant_app_py"
+alias ep="cd ~/code/enrollment_portal"
+alias identity="cd ~/code/identification"
+alias common="cd ~/code/common_lib_py"
+alias pajs="cd ~/code/participant_app_py/www/static/js"
+alias ops="cd ~/code/ops"
+alias plp="cd ~/code/program_lead_portal_py"
+alias labs="cd ~/code/labs"
+alias c="cd ~/code/common_lib_py"
+alias v="cd ~/go/src/github.com/KetoThrive"
+alias blog="cd ~/go/src/github.com/tmc/tmc.github.io"
+alias blogsrc="cd ~/go/src/github.com/tmc/tmc.github.io/src"
+#alias s="cd ~/go/src/github.com/logv/sybil"
+alias sn="cd ~/go/src/github.com/logv/snorkel"
+alias gh="hub"
+alias d="cd ~/code/docker_dev"
+alias dr="cd ~/go/src/github.com/VirtaHealth/ops/scripts/disaster_recovery"
+alias k='kubectl'
+alias kva='kubectl -n virta-apps'
+alias ks='kubectl -n kube-system'
+alias kv='kubectl -n virta-system'
+alias kvs='kubectl -n virta-system'
+#alias ka='kubectl --all-namespaces'
+alias kdp='kubectl describe pod'
+alias ki='kubectl -n istio-system'
+alias ko='kubectl -n istio-operator'
+alias km='kubectl -n monitoring'
+alias ka='kubectl -n argocd'
+alias kl='kubectl -n looker'
+alias kf='kubectl -n kubeflow'
+alias kj='kubectl -n jupyter'
+alias istio='cd /Users/tmc/go/src/github.com/VirtaHealth/ops/charts/istio'
+alias a='cd ~/code/airflow'
+alias ai='cd ~/code/applied-ai'
+alias apai='cd ~/code/applied-ai'
+alias airflow='cd ~/code/airflow'
+alias bb='bazel build ...'
+alias bt='bazel test ... --test_output=errors'
+#alias b='bazel'
+alias bce='bazel clean --expunge'
+alias bclean='bazel clean'
+alias svim='vim -u NONE'
+alias e='cd ~/code/elixir'
+alias eng='cd ~/code/elixir/infra/tf/engineering'
+alias ee='cd ~/code/elixir/infra/tf/engineering'
+alias ktwist='kubectl -n twistlock'
+alias vimj="vim -c 'setl ft=json | setl fdm=syntax | set foldlevel=6' -"
+alias ite="cd ~/code/elixir/infra/tf/engineering"
+alias kn='kubectl -n knative-serving'
+alias kkn='kubectl -n knative-serving'
+alias kcr='kubectl -n knative-serving'
+#alias kd="kubectl -n dev-${USER}"
+alias kd="kubectl -n dev-tmc"
+alias tf11=terraform11.14
+alias tf12=terraform12
+alias tf=terraform
+alias :e=vim
+alias :wq=exit
+alias :q=exit
+alias opengke="open https://console.cloud.google.com/kubernetes/list?project=$(gcloud config get-value project)"
+alias gd="git diff"
+alias spoke="git diff"
+alias hcds="cd ~/code/hcds"
+alias pr="gh pull-request -o"
+alias gopseudoversion='echo -n v0.0.0-; TZ=UTC git --no-pager show --quiet --abbrev=12 --date='format-local:%Y%m%d%H%M%S' --format="%cd-%h"'
+alias datop="docker run --privileged --pid=host -it ubuntu:bionic bash -- -c 'apt-get update; apt-get install -y atop; atop'"
