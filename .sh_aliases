@@ -60,7 +60,9 @@ alias tf=terraform
 alias :e=vim
 alias :wq=exit
 alias :q=exit
-alias opengke="open https://console.cloud.google.com/kubernetes/list?project=$(gcloud config get-value project)"
+if command -v gcloud > /dev/null; then
+  alias opengke="open https://console.cloud.google.com/kubernetes/list?project=$(gcloud config get-value project)"
+fi
 alias gd="git diff"
 alias spoke="git diff"
 alias hcds="cd ~/code/hcds"

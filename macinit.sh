@@ -3,7 +3,7 @@
 set -eu
 GITROOTP="${HOME}/go/src/github.com/${USER}"
 GITROOT="${GITROOTP}/dotfiles"
-FILES=(.bashrc .vimrc .gitconfig .iterm2 .sh_aliases)
+FILES=(.bashrc .zshrc .vimrc .gitconfig .iterm2 .sh_aliases)
 file -d "${GITROOTP}" || mkdir -p "${GITROOTP}"
 file -d "${GITROOT}" || (cd "${GITROOTP}"; git clone https://github.com/tmc/dotfiles.git)
 cd "${HOME}"
