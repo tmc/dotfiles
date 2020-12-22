@@ -57,6 +57,7 @@ export PATH=$HOME/bin:/usr/local/bin:$PATH
 #export GOPATH=$HOME/go
 #export PATH=$GOPATH/bin:$PATH
 export PATH=$HOME/go/bin:$PATH
+export PATH=$HOME/go/bin/darwin_arm64:$PATH
 export PATH=$HOME/.cargo/bin:$PATH
 export PATH=/home/user/.config/yarn/global/node_modules/.bin:$PATH
 export PATH="/Users/tmc/.deno/bin:$PATH"
