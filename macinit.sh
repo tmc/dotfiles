@@ -20,3 +20,6 @@ cd "${GITROOT}"
 brew bundle install
 defaults write -g InitialKeyRepeat -int 10 # normal minimum is 15 (225 ms)
 defaults write -g KeyRepeat -int 1 # normal minimum is 2 (30 ms)
+
+file -d ~/Desktop/screenshots || mkdir ~/Desktop/screenshots
+defaults write com.apple.screencapture location ~/Desktop/screenshots
