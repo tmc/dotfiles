@@ -41,6 +41,10 @@ fi
 if [ -f ~/.sh_aliases ]; then
 	. ~/.sh_aliases
 fi
+if [ -f ~/.sh_aliases_local ]; then
+	. ~/.sh_aliases_local
+fi
+
 
 if ! shopt -oq posix; then
 	if [ -f /usr/local/etc/bash_completion ]; then
