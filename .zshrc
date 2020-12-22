@@ -1,4 +1,5 @@
 # tmc's .zshrc
+export PS1='%n@%m %~$ '
 export EDITOR=vim
 export PATH=$HOME/bin:/usr/local/bin:$PATH
 export PATH=$HOME/go/bin:$PATH
