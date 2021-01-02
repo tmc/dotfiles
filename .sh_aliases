@@ -15,7 +15,6 @@ alias blog="cd ~/go/src/github.com/tmc/tmc.github.io"
 alias blogsrc="cd ~/go/src/github.com/tmc/tmc.github.io/src"
 #alias s="cd ~/go/src/github.com/logv/sybil"
 alias sn="cd ~/go/src/github.com/logv/snorkel"
-alias gh="hub"
 alias d="cd ~/code/docker_dev"
 alias dr="cd ~/go/src/github.com/VirtaHealth/ops/scripts/disaster_recovery"
 alias k='kubectl'
@@ -64,6 +63,7 @@ if command -v gcloud > /dev/null; then
   alias opengke="open https://console.cloud.google.com/kubernetes/list?project=$(gcloud config get-value project)"
 fi
 alias gd="git diff"
+alias ghb="gh repo view -w"
 alias spoke="git diff"
 alias hcds="cd ~/code/hcds"
 alias pr="gh pull-request -o"

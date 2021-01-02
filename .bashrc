@@ -1,4 +1,7 @@
 # ~/.bashrc: executed by bash(1) for non-login shells.
+if [ -f ~/.bashrc_local ]; then
+	. ~/.bashrc_local
+fi
 case $- in
 *i*) ;;
 *) return ;;

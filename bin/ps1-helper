@@ -1,0 +1,11 @@
+#!/bin/bash
+# populate ps1 content asyncrhonously.
+set -euo pipefail
+(
+  (
+    echo "$(date) gcloud: $(gcloud config get-value project)"
+  ) > ~/.ps1-output-cache_
+cp ~/.ps1-output-cache{_,}
+) &
+# exists but prevents backgrounded subshell from ending.
+disown -h
