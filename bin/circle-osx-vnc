@@ -1,0 +1,7 @@
+#!/bin/bash
+# usage: circle-osx-vnc (ip)
+ip="${1}"
+# you may need
+# sudo /System/Library/CoreServices/RemoteManagement/ARDAgent.app/Contents/Resources/kickstart -activate -configure -allowAccessFor -allUsers -privs -all -clientopts -setmenuextra -menuextra yes
+
+ssh -p 54782 "${ip}" -L5901:localhost:5900 -- sudo /usr/sbin/sysadminctl -addUser vncuser -fullName "VNC User" -password password -admin

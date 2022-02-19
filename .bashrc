@@ -21,6 +21,11 @@ PROMPT_COMMAND="~/bin/ps1-helper"
 #export PROMPT_COMMAND="${PROMPT_COMMAND:+$PROMPT_COMMAND$'\n'}history -a; history -c; history -r"
 PROMPT_COMMAND="${PROMPT_COMMAND:+$PROMPT_COMMAND$'\n'}history -a; history -n"
 
+# necessary early as ps1-helper may call gcloud
+export CLOUDSDK_PYTHON=python2.7
+source "/usr/local/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/path.bash.inc"
+source "/usr/local/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/completion.bash.inc"
+
 prompt_status() {
     [ $? = 0 ] && return
     echo -n "${?} "
@@ -64,8 +69,8 @@ export PATH=$HOME/go/bin/darwin_arm64:$PATH
 export PATH=$HOME/.cargo/bin:$PATH
 export PATH=/home/user/.config/yarn/global/node_modules/.bin:$PATH
 export PATH="/Users/tmc/.deno/bin:$PATH"
+export PATH="${KREW_ROOT:-$HOME/.krew}/bin:$PATH"
 
-source ~/.bash_profile
 
 #[ -f ~/.fzf.bash ] && source ~/.fzf.bash
 export GPG_TTY=$(tty)
@@ -105,4 +110,10 @@ export NVM_DIR="$HOME/.nvm"
 # . <(bqconn completion)
 # function uriencode { jq -nr --arg v "$1" '$v|@uri'; }
 # eval "$(jira --completion-script-bash)"
-
+# Add the following to your shell init to set up gpg-agent automatically for every shell
+# if [ -f ~/.gnupg/.gpg-agent-info ] && [ -n "$(pgrep gpg-agent)" ]; then
+#     source ~/.gnupg/.gpg-agent-info
+#     export GPG_AGENT_INFO
+# else
+#     eval $(gpg-agent --daemon)
+# fi

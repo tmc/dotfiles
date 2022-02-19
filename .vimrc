@@ -34,7 +34,7 @@ Plug 'mbbill/undotree'
 Plug 'terryma/vim-expand-region'
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-rhubarb'
-Plug 'ludovicchabant/vim-gutentags'
+" Plug 'ludovicchabant/vim-gutentags'
 "}}}
 " flair {{{
 Plug 'airblade/vim-gitgutter'
@@ -43,12 +43,14 @@ Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 "}}}
 " completion+snippets {{{
+"Plug 'sirver/ultisnips'
 Plug 'Shougo/neosnippet-snippets'
 Plug 'Shougo/neosnippet.vim'
 "Plug 'Shougo/neocomplete.vim'
 "}}}
 " experiments {{{
 Plug 'bazelbuild/vim-bazel'
+Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
 "Plug 'dbeniamine/cheat.sh-vim'
 Plug 'google/vim-maktaba'
@@ -58,7 +60,7 @@ Plug 'michaeljsmith/vim-indent-object'
 Plug 'pedrohdz/vim-yaml-folds'
 Plug 'rhysd/git-messenger.vim'
 Plug 'somini/vim-textobj-fold'
-Plug 'tmc/vimscripts', { 'rtp': 'git-backups', 'as': 'tmc-git-backups' }
+" Plug 'tmc/vimscripts', { 'rtp': 'git-backups', 'as': 'tmc-git-backups' }
 Plug 'vim-scripts/dbext.vim'
 Plug 'dense-analysis/ale'
 Plug 'bufbuild/vim-buf'
@@ -69,16 +71,19 @@ Plug 'whiteinge/diffconflicts'
 " language support {{{
 "Plug 'Quramy/tsuquyomi'
 Plug 'fatih/vim-go'
+Plug 'rust-lang/rust.vim'
 Plug 'gf3/peg.vim'
-Plug 'othree/javascript-libraries-syntax.vim'
+" Plug 'othree/javascript-libraries-syntax.vim'
 Plug 'rhysd/vim-grammarous'
 Plug 'sheerun/vim-polyglot'
-Plug 'suan/vim-instant-markdown'
+Plug 'instant-markdown/vim-instant-markdown', {'for': 'markdown'}
 Plug 'tpope/vim-bundler'
 Plug 'tpope/vim-markdown'
 Plug 'tpope/vim-rails'
 Plug 'vadv/vim-chef'
 Plug 'vim-scripts/SWIG-syntax'
+Plug 'cappyzawa/starlark.vim'
+Plug 'vmware-tanzu/ytt.vim'
 "}}}
 call plug#end()
 "}}}
@@ -184,6 +189,7 @@ vmap v <Plug>(expand_region_expand)
 vmap <C-v> <Plug>(expand_region_shrink)
 
 " neosnippet:
+"let g:UltiSnipsExpandTrigger="<tab>"
 imap <C-k>     <Plug>(neosnippet_expand_or_jump)
 smap <C-k>     <Plug>(neosnippet_expand_or_jump)
 xmap <C-k>     <Plug>(neosnippet_expand_target)
@@ -202,6 +208,8 @@ nnoremap <leader>r :<C-U>ShadenRepatch<CR>
 set tags+=./.tags,.tags;
 let g:gutentags_ctags_tagfile = '.tags'
 let g:gutentags_cache_dir = '~/.vim/tags'
+"let g:gutentags_define_advanced_commands = 1
+"let g:gutentags_trace = 1
 
 "}}}
 
@@ -289,7 +297,7 @@ au FileType go nmap <Leader>C :GoGoverageBrowser <CR>
 "}}}
 
 " eslint fix
-au FileType javascript.jsx nmap <Leader>f :!$(npm bin)/eslint --fix % <CR>
+" au FileType javascript.jsx nmap <Leader>f :!$(npm bin)/eslint --fix % <CR>
 
 " typescript
 au FileType typescript nmap <Leader>f :!yarn fix <CR> <CR>

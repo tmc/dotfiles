@@ -1,0 +1,7 @@
+#!/bin/bash
+test -d ~/.vim-git-backups || exit 0
+cd ~/.vim-git-backups
+if [ "$(git rev-list --count --since='1 day' HEAD)" -eq "0" ]; then
+  echo '- NO BACKUPS in last 24h!!!!!!! ' 
+fi
+

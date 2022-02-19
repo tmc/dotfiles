@@ -1,0 +1,6 @@
+#!/bin/bash
+sudo /usr/sbin/sysadminctl -addUser vncuser -fullName "VNC User" -password password -admin
+sudo /System/Library/CoreServices/RemoteManagement/ARDAgent.app/Contents/Resources/kickstart -activate -configure -allowAccessFor -allUsers -privs -all -clientopts -setmenuextra -menuextra yes
+brew install ngrok
+ngrok authtoken ${NGROK_TOKEN}
+ngrok tcp 5900

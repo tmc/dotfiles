@@ -1,0 +1,5 @@
+#!/bin/bash
+set -euo pipefail
+cd ~/.backups
+cp ~/.bash_history ~/.bash_history.recent
+ls -atr |grep bash_h|tail -n5 |xargs cat |uniq >> ~/.bash_history

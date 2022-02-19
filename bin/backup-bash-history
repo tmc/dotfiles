@@ -1,0 +1,4 @@
+#!/bin/bash
+set -euo pipefail
+test -d ~/.backups || mkdir ~/.backups
+cat ~/.backups/.bash_history* ~/.bash_history |sort |uniq > ~/.backups/.bash_history.uniq
