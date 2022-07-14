@@ -50,7 +50,7 @@ Plug 'Shougo/neosnippet.vim'
 "}}}
 " experiments {{{
 Plug 'bazelbuild/vim-bazel'
-Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+Plug 'jparise/vim-graphql'
 Plug 'junegunn/fzf.vim'
 "Plug 'dbeniamine/cheat.sh-vim'
 Plug 'google/vim-maktaba'
@@ -65,7 +65,9 @@ Plug 'vim-scripts/dbext.vim'
 Plug 'dense-analysis/ale'
 Plug 'bufbuild/vim-buf'
 Plug 'whiteinge/diffconflicts'
+Plug 'tomlion/vim-solidity'
 " Plug 'neoclide/coc.nvim', {'branch': 'release'}
+Plug 'github/copilot.vim'
 ""}}}
 
 " language support {{{
@@ -75,15 +77,20 @@ Plug 'rust-lang/rust.vim'
 Plug 'gf3/peg.vim'
 " Plug 'othree/javascript-libraries-syntax.vim'
 Plug 'rhysd/vim-grammarous'
-Plug 'sheerun/vim-polyglot'
-Plug 'instant-markdown/vim-instant-markdown', {'for': 'markdown'}
+" Plug 'sheerun/vim-polyglot'
+"Plug 'instant-markdown/vim-instant-markdown', {'for': 'markdown'}
 Plug 'tpope/vim-bundler'
-Plug 'tpope/vim-markdown'
+"Plug 'tpope/vim-markdown'
 Plug 'tpope/vim-rails'
 Plug 'vadv/vim-chef'
 Plug 'vim-scripts/SWIG-syntax'
-Plug 'cappyzawa/starlark.vim'
-Plug 'vmware-tanzu/ytt.vim'
+
+" js/ts/jsx
+Plug 'pangloss/vim-javascript'
+Plug 'leafgarland/typescript-vim'
+Plug 'peitalin/vim-jsx-typescript'
+Plug 'styled-components/vim-styled-components', { 'branch': 'main' }
+Plug 'jparise/vim-graphql'
 "}}}
 call plug#end()
 "}}}
@@ -100,7 +107,9 @@ set path+=**
 set switchbuf=useopen,usetab
 
 set history=10000
-set cryptmethod=blowfish2
+if !has('nvim')
+  set cryptmethod=blowfish2
+endif
 filetype plugin indent on
 
 set wildmenu
@@ -137,9 +146,9 @@ set scrolloff=5
 set hlsearch
 set incsearch
 
-packadd! matchit
+" packadd! matchit
 " color to col 128
-set synmaxcol=128
+" set synmaxcol=128
 " folds
 set foldcolumn=3
 set foldlevel=2
@@ -303,8 +312,7 @@ au FileType go nmap <Leader>C :GoGoverageBrowser <CR>
 au FileType typescript nmap <Leader>f :!yarn fix <CR> <CR>
 
 " markdown
-let vim_markdown_preview_github=1
-let vim_markdown_preview_hotkey='<C-m>'
+let g:instant_markdown_autostart = 1
 autocmd BufNewFile,BufReadPost *.md set filetype=markdown
 autocmd BufRead,BufNewFile *.md setlocal textwidth=100
 

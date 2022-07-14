@@ -1,6 +1,7 @@
 # shell aliases
 
 alias t="cd ~/go/src/github.com/tmc"
+alias g="cd ~/go/src/github.com/gofwd-us"
 alias pa="cd ~/code/participant_app_py"
 alias ep="cd ~/code/enrollment_portal"
 alias identity="cd ~/code/identification"
@@ -41,7 +42,7 @@ alias kvs='kubectl -n virta-system'
 alias k20='kubectl -n virta-apps-20k'
 alias k50='kubectl -n virta-apps-50k'
 alias istio='cd /Users/tmc/go/src/github.com/VirtaHealth/ops/charts/istio'
-alias a='cd ~/code/airflow'
+alias a='cd ~/go/src/github.com/algorand/go-algorand'
 alias ai='cd ~/code/applied-ai'
 alias apai='cd ~/code/applied-ai'
 alias airflow='cd ~/code/airflow'
@@ -73,6 +74,7 @@ alias :wq=exit
 alias :q=exit
 if command -v gcloud > /dev/null; then
   alias opengke="open https://console.cloud.google.com/kubernetes/list?project=$(gcloud config get-value project)"
+  alias opencloudrun="open https://console.cloud.google.com/run?project=$(gcloud config get-value project)"
 fi
 alias gd="git diff"
 alias ghb="gh repo view -w"
