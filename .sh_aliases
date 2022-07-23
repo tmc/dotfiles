@@ -7,10 +7,13 @@ alias identity="cd ~/code/identification"
 alias common="cd ~/code/common_lib_py"
 alias pajs="cd ~/code/participant_app_py/www/static/js"
 alias ops="cd ~/code/ops"
+alias gitops="cd ~/code/gitops"
+alias ap2="cd ~/code/gitops/configs/env/dev/apps-cluster-2"
+alias st="cd ~/code/system-tests"
+alias auth="cd ~/code/elixir/infra/traffic/authproxy"
 alias plp="cd ~/code/program_lead_portal_py"
 alias labs="cd ~/code/labs"
 alias c="cd ~/code/common_lib_py"
-alias v="cd ~/code/elixir/infra/tools/virtactl"
 alias blog="cd ~/go/src/github.com/tmc/tmc.github.io"
 alias blogsrc="cd ~/go/src/github.com/tmc/tmc.github.io/src"
 #alias s="cd ~/go/src/github.com/logv/sybil"
@@ -78,6 +81,7 @@ alias hcds="cd ~/code/hcds"
 alias pr="gh pull-request -o"
 alias gopseudoversion='echo -n v0.0.0-; TZ=UTC git --no-pager show --quiet --abbrev=12 --date='format-local:%Y%m%d%H%M%S' --format="%cd-%h"'
 alias datop="docker run --privileged --pid=host -it ubuntu:bionic bash -- -c 'apt-get update; apt-get install -y atop; atop'"
+alias b='cd ~/code/backend'
 alias ghb='gh repo view -w'
 alias na='cd ~/code/needs_attention'
 alias rfc='cd ~/code/RFCs'

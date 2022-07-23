@@ -1,4 +1,7 @@
 #!/bin/bash
+# sample crontab:
+# 0 * * * * /Users/tmc/go/src/github.com/tmc/dotfiles/bin/backup-bash-history
 set -euo pipefail
 test -d ~/.backups || mkdir ~/.backups
+cp ~/.bash_history ~/.backups/.bash_history.$(date +%s)
 cat ~/.backups/.bash_history* ~/.bash_history |sort |uniq > ~/.backups/.bash_history.uniq
