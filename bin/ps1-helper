@@ -1,5 +1,5 @@
-#!/bin/bash
-# populate ps1 content asyncrhonously.
+#!/bin/sh
+# populate ps1 content asynchronously.
 set -euo pipefail
 
 (
