@@ -28,13 +28,13 @@ Plug 'LucHermitte/lh-vim-lib'
 Plug 'LucHermitte/local_vimrc'
 Plug 'Shougo/vinarise.vim'
 Plug 'chrisjohnson/vim-grep'
-Plug 'majutsushi/tagbar'
+" Plug 'majutsushi/tagbar'
 Plug 'markonm/traces.vim'
 Plug 'mbbill/undotree'
 Plug 'terryma/vim-expand-region'
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-rhubarb'
-" Plug 'ludovicchabant/vim-gutentags'
+Plug 'ludovicchabant/vim-gutentags'
 "}}}
 " flair {{{
 Plug 'airblade/vim-gitgutter'
@@ -127,6 +127,9 @@ set undofile
 set undodir=~/.vim/.undo/
 set backupdir=~/.vim/.backup/
 set directory=~/.vim/.swp/
+if has('nvim')
+  set undodir=~/.vim/.nundo/
+endif
 if !isdirectory("~/.vim/.swp")
     silent !mkdir ~/.vim/.swp > /dev/null 2>&1
     silent !mkdir ~/.vim/.undo > /dev/null 2>&1
@@ -230,14 +233,15 @@ let g:go_def_mode='gopls'
 let g:go_info_mode='gopls'
 let g:go_doc_url='https://pkg.go.dev/'
 let g:ale_linters = {
-\  'go': ['gofmt', 'golint', 'govet', 'gopls'],
+\  'go': ['golangci-lint'],
 \  'cpp': ['clang'],
-\  'python': ['pyls'],
+\  'python': ['ruff'],
 \  'typescript': ['tsserver', 'typecheck', 'tslint'],
 \  'proto': ['buf-check-lint',],
 \}
 let g:ale_fixers = {
 \  'typescript': ['tslint'],
+\  'python': ['ruff'],
 \  'java': ['google_java_format'],
 \  'javascript': ['eslint', 'prettier'],
 \  'javascript.jsx': ['eslint', 'prettier'],

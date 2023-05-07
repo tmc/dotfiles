@@ -1,9 +1,10 @@
 #!/bin/bash
 # populate ps1 content asyncrhonously.
+exit 0
 set -euo pipefail
 (
   (
-    echo "$(date) gcloud: $(gcloud config get-value project)"
+  echo "$(date) gcloud: $(gcloud config configurations list --filter=is_active:true |grep True |awk '{print $1}') $(gcloud config -q get-value project 2>/dev/null)"
   ) > ~/.ps1-output-cache_
 cp ~/.ps1-output-cache{_,}
 ) &

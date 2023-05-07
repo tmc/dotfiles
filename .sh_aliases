@@ -88,3 +88,5 @@ alias ghb='gh repo view -w'
 alias na='cd ~/code/needs_attention'
 alias rfc='cd ~/code/RFCs'
 alias rfcs='cd ~/code/RFCs'
+alias sc="cd ~/go/src/github.com/tmc/sc"
+alias lc="cd ~/go/src/github.com/tmc/langchaingo"

@@ -44,8 +44,8 @@
 [merge]
 	tool = diffconflicts
 
-[rerere]
-	enabled = 1
+; [rerere]
+; 	enabled = 1
 
 [branch]  
 	autosetuprebase = always
@@ -93,13 +93,14 @@
 	newNormal = green bold
 	newHighlight = green bold 22
 
-#[commit]
-#	gpgsign = true
+[commit]
+	#gpgsign = true
 
 [http]
 	cookiefile = /Users/tmc/.gitcookies
 [user]
 	name = Travis Cline
 	email = travis.cline@gmail.com
+	signingkey = 1B3869FEF61487F1
 [difftool]
 	prompt = false
