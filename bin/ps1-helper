@@ -1,12 +1,39 @@
 #!/bin/bash
 # populate ps1 content asyncrhonously.
-exit 0
 set -euo pipefail
+
 (
+  # Check if gcloud is installed
+  command -v gcloud >/dev/null 2>&1 || { echo >&2 "gcloud required but it's not installed.  Aborting."; exit 1; }
+
+  # Lock file path
+  lockfile=~/.ps1-output-cache.lock
+
+  # Check if another instance of the script is running
+  if [ -e "$lockfile" ]; then
+    exit 1
+  fi
+
+  # Create lock file
+  touch "$lockfile"
+
+  # Try to delete the lock file when the script exits, even if there's an error
+  trap 'rm -f "$lockfile"' EXIT
+
   (
-  echo "$(date) gcloud: $(gcloud config configurations list --filter=is_active:true |grep True |awk '{print $1}') $(gcloud config -q get-value project 2>/dev/null)"
+    last-git-backup
+    echo "foo"
+    echo "$(date) gcloud: $(gcloud config configurations list --filter=is_active:true | grep True | awk '{print $1}') $(gcloud config -q get-value project 2>/dev/null)"
+    # Check for the existence of bash history backup script in cron jobs
+    if ! crontab -l 2>&1 | grep -q 'backup-bash-history'; then
+        echo "Warning: bash history backup script is not in crontab"
+    fi
   ) > ~/.ps1-output-cache_
-cp ~/.ps1-output-cache{_,}
+  mv ~/.ps1-output-cache{_,}
 ) &
+
 # exists but prevents backgrounded subshell from ending.
 disown -h
+
+exit 0
+

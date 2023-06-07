@@ -49,6 +49,7 @@ Plug 'Shougo/neosnippet.vim'
 "Plug 'Shougo/neocomplete.vim'
 "}}}
 " experiments {{{
+Plug 'evanleck/vim-svelte'
 Plug 'bazelbuild/vim-bazel'
 Plug 'jparise/vim-graphql'
 Plug 'junegunn/fzf.vim'
@@ -232,8 +233,8 @@ let g:ale_python_pyls_executable='pyls'
 let g:go_def_mode='gopls'
 let g:go_info_mode='gopls'
 let g:go_doc_url='https://pkg.go.dev/'
+" \  'go': ['golangci-lint'],
 let g:ale_linters = {
-\  'go': ['golangci-lint'],
 \  'cpp': ['clang'],
 \  'python': ['ruff'],
 \  'typescript': ['tsserver', 'typecheck', 'tslint'],
