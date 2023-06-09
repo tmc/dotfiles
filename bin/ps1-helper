@@ -22,8 +22,8 @@ set -euo pipefail
 
   (
     last-git-backup
-    # if .ps1-helper-local is present and executable, run it:
-    if [ -x "~/bin/ps1-helper-local" ]; then
+    # if ps1-helper-local is present and executable, run it:
+    if [ -x "${HOME}/bin/ps1-helper-local" ]; then
       ~/bin/ps1-helper-local
     fi
     echo "$(date) gcloud: $(gcloud config configurations list --filter=is_active:true | grep True | awk '{print $1}') $(gcloud config -q get-value project 2>/dev/null)"
