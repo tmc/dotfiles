@@ -28,7 +28,7 @@ Plug 'LucHermitte/lh-vim-lib'
 Plug 'LucHermitte/local_vimrc'
 Plug 'Shougo/vinarise.vim'
 Plug 'chrisjohnson/vim-grep'
-" Plug 'majutsushi/tagbar'
+Plug 'majutsushi/tagbar'
 Plug 'markonm/traces.vim'
 Plug 'mbbill/undotree'
 Plug 'terryma/vim-expand-region'
@@ -43,16 +43,15 @@ Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 "}}}
 " completion+snippets {{{
-"Plug 'sirver/ultisnips'
 Plug 'Shougo/neosnippet-snippets'
 Plug 'Shougo/neosnippet.vim'
 "Plug 'Shougo/neocomplete.vim'
 "}}}
 " experiments {{{
-Plug 'evanleck/vim-svelte'
+Plug 'chiedo/vim-px-to-em'
 Plug 'bazelbuild/vim-bazel'
-Plug 'jparise/vim-graphql'
 Plug 'junegunn/fzf.vim'
+Plug 'terrastruct/d2-vim'
 "Plug 'dbeniamine/cheat.sh-vim'
 Plug 'google/vim-maktaba'
 Plug 'hashivim/vim-terraform'
@@ -61,7 +60,6 @@ Plug 'michaeljsmith/vim-indent-object'
 Plug 'pedrohdz/vim-yaml-folds'
 Plug 'rhysd/git-messenger.vim'
 Plug 'somini/vim-textobj-fold'
-" Plug 'tmc/vimscripts', { 'rtp': 'git-backups', 'as': 'tmc-git-backups' }
 Plug 'vim-scripts/dbext.vim'
 Plug 'dense-analysis/ale'
 Plug 'bufbuild/vim-buf'
@@ -69,29 +67,26 @@ Plug 'whiteinge/diffconflicts'
 Plug 'tomlion/vim-solidity'
 " Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'github/copilot.vim'
+" Plug 'neoclide/coc.nvim', {'branch': 'release'}
+if !has('nvim')
+  Plug 'tmc/vimscripts', { 'rtp': 'git-backups', 'as': 'tmc-git-backups' }
+endif
 ""}}}
 
 " language support {{{
 "Plug 'Quramy/tsuquyomi'
 Plug 'fatih/vim-go'
-Plug 'rust-lang/rust.vim'
+"Plug 'davidhalter/jedi-vim'
 Plug 'gf3/peg.vim'
 " Plug 'othree/javascript-libraries-syntax.vim'
-Plug 'rhysd/vim-grammarous'
-" Plug 'sheerun/vim-polyglot'
-"Plug 'instant-markdown/vim-instant-markdown', {'for': 'markdown'}
+" Plug 'rhysd/vim-grammarous'
+Plug 'sheerun/vim-polyglot'
+" Plug 'suan/vim-instant-markdown'
 Plug 'tpope/vim-bundler'
-"Plug 'tpope/vim-markdown'
+" Plug 'tpope/vim-markdown'
 Plug 'tpope/vim-rails'
 Plug 'vadv/vim-chef'
 Plug 'vim-scripts/SWIG-syntax'
-
-" js/ts/jsx
-Plug 'pangloss/vim-javascript'
-Plug 'leafgarland/typescript-vim'
-Plug 'peitalin/vim-jsx-typescript'
-Plug 'styled-components/vim-styled-components', { 'branch': 'main' }
-Plug 'jparise/vim-graphql'
 "}}}
 call plug#end()
 "}}}
@@ -108,18 +103,25 @@ set path+=**
 set switchbuf=useopen,usetab
 
 set history=10000
+
 if !has('nvim')
   set cryptmethod=blowfish2
 endif
+
 filetype plugin indent on
 
 set wildmenu
 set wildmode=longest:full,full
+set wildignore+=**/node_modules/**
 
 set encoding=utf-8
 set laststatus=2
 set relativenumber
 set number
+set statusline+=%{gutentags#statusline()}
+
+" tag config
+" let g:gutentags_trace = 1
 
 " undo,backup,swap
 set swapfile
@@ -130,6 +132,8 @@ set backupdir=~/.vim/.backup/
 set directory=~/.vim/.swp/
 if has('nvim')
   set undodir=~/.vim/.nundo/
+  set backupdir=~/.vim/.nbackup/
+  set directory=~/.vim/.nswp/
 endif
 if !isdirectory("~/.vim/.swp")
     silent !mkdir ~/.vim/.swp > /dev/null 2>&1
@@ -150,9 +154,9 @@ set scrolloff=5
 set hlsearch
 set incsearch
 
-" packadd! matchit
+packadd! matchit
 " color to col 128
-" set synmaxcol=128
+set synmaxcol=128
 " folds
 set foldcolumn=3
 set foldlevel=2
@@ -202,7 +206,6 @@ vmap v <Plug>(expand_region_expand)
 vmap <C-v> <Plug>(expand_region_shrink)
 
 " neosnippet:
-"let g:UltiSnipsExpandTrigger="<tab>"
 imap <C-k>     <Plug>(neosnippet_expand_or_jump)
 smap <C-k>     <Plug>(neosnippet_expand_or_jump)
 xmap <C-k>     <Plug>(neosnippet_expand_target)
@@ -221,8 +224,6 @@ nnoremap <leader>r :<C-U>ShadenRepatch<CR>
 set tags+=./.tags,.tags;
 let g:gutentags_ctags_tagfile = '.tags'
 let g:gutentags_cache_dir = '~/.vim/tags'
-"let g:gutentags_define_advanced_commands = 1
-"let g:gutentags_trace = 1
 
 "}}}
 
@@ -233,23 +234,22 @@ let g:ale_python_pyls_executable='pyls'
 let g:go_def_mode='gopls'
 let g:go_info_mode='gopls'
 let g:go_doc_url='https://pkg.go.dev/'
-" \  'go': ['golangci-lint'],
 let g:ale_linters = {
+\  'go': ['gopls'],
 \  'cpp': ['clang'],
-\  'python': ['ruff'],
-\  'typescript': ['tsserver', 'typecheck', 'tslint'],
+\  'python': ['pyls'],
 \  'proto': ['buf-check-lint',],
 \}
+" \  'typescript': ['tsserver', 'typecheck', 'tslint'],
+" \  'typescript': ['tslint'],
 let g:ale_fixers = {
-\  'typescript': ['tslint'],
-\  'python': ['ruff'],
 \  'java': ['google_java_format'],
 \  'javascript': ['eslint', 'prettier'],
 \  'javascript.jsx': ['eslint', 'prettier'],
 \  'jsx': ['eslint', 'prettier'],
 \}
 "\  'typescript': ['eslint','prettier','tslint', 'trim_whitespace'],
-let g:ale_fix_on_save=1
+" let g:ale_fix_on_save=1
 let g:ale_history_enabled = 1
 let g:ale_history_log_output = 1
 let g:airline#extensions#ale#enabled = 1
@@ -311,13 +311,14 @@ au FileType go nmap <Leader>C :GoGoverageBrowser <CR>
 "}}}
 
 " eslint fix
-" au FileType javascript.jsx nmap <Leader>f :!$(npm bin)/eslint --fix % <CR>
+au FileType javascript.jsx nmap <Leader>f :!$(npm bin)/eslint --fix % <CR>
 
 " typescript
 au FileType typescript nmap <Leader>f :!yarn fix <CR> <CR>
 
 " markdown
-let g:instant_markdown_autostart = 1
+let vim_markdown_preview_github=1
+let vim_markdown_preview_hotkey='<C-m>'
 autocmd BufNewFile,BufReadPost *.md set filetype=markdown
 autocmd BufRead,BufNewFile *.md setlocal textwidth=100
 
