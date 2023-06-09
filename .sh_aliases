@@ -78,12 +78,15 @@ if command -v gcloud > /dev/null; then
 fi
 alias gd="git diff"
 alias ghb="gh repo view -w"
+alias ghpr="gh pr view -w"
 alias spoke="git diff"
 alias hcds="cd ~/code/hcds"
 alias pr="gh pull-request -o"
 alias gopseudoversion='echo -n v0.0.0-; TZ=UTC git --no-pager show --quiet --abbrev=12 --date='format-local:%Y%m%d%H%M%S' --format="%cd-%h"'
 alias datop="docker run --privileged --pid=host -it ubuntu:bionic bash -- -c 'apt-get update; apt-get install -y atop; atop'"
 alias b='cd ~/code/backend'
+alias bi='cd ~/code/base-images'
+alias f='cd ~/code/frontend'
 alias ghb='gh repo view -w'
 alias na='cd ~/code/needs_attention'
 alias rfc='cd ~/code/RFCs'
