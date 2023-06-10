@@ -4,6 +4,7 @@
 <dict>
 	<key>Coprocess MRU</key>
 	<array>
+		<string>echo vim /Users/tmc/go/src/github.com/tmc/hackathon-starter/react-frontend/src/gqlClient.ts +</string>
 		<string>echo vim /Users/tmc/go/src/github.com/tmc/langchaingo/exp/documentLoaders/textLoader.go +6</string>
 		<string>echo vim /Users/tmc/go/src/github.com/ariga/atlas/internal/integration/integration_test.go +529</string>
 		<string>echo vim /Users/tmc/go/src/github.com/ariga/atlas/internal/integration/spanner_test.go +59</string>

@@ -60,6 +60,7 @@ Plug 'michaeljsmith/vim-indent-object'
 Plug 'pedrohdz/vim-yaml-folds'
 Plug 'rhysd/git-messenger.vim'
 Plug 'somini/vim-textobj-fold'
+Plug 'tmc/vimscripts', { 'rtp': 'git-backups', 'as': 'tmc-git-backups' }
 Plug 'vim-scripts/dbext.vim'
 Plug 'dense-analysis/ale'
 Plug 'bufbuild/vim-buf'
@@ -75,6 +76,7 @@ endif
 
 " language support {{{
 "Plug 'Quramy/tsuquyomi'
+Plug 'cappyzawa/starlark.vim'
 Plug 'fatih/vim-go'
 "Plug 'davidhalter/jedi-vim'
 Plug 'gf3/peg.vim'
@@ -321,10 +323,6 @@ let vim_markdown_preview_github=1
 let vim_markdown_preview_hotkey='<C-m>'
 autocmd BufNewFile,BufReadPost *.md set filetype=markdown
 autocmd BufRead,BufNewFile *.md setlocal textwidth=100
-
-" Tiltfile
-autocmd BufNewFile,BufReadPost Tiltfile set filetype=python
-autocmd BufNewFile,BufReadPost Tiltfile.* set filetype=python
 
 " swig
 autocmd BufNewFile,BufReadPost *.swigcxx set filetype=swig
