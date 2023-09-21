@@ -3,16 +3,9 @@ case $- in
 *i*) ;;
 *) return ;;
 esac
+export PATH=/opt/homebrew/bin/:$PATH
 
-if [ -f ~/.bashrc_local ]; then
-       . ~/.bashrc_local
-fi
-prompt_status() {
-    [ $? = 0 ] && return
-    echo -n "${?} "
-}
-
-
+source "$(brew --prefix)/share/google-cloud-sdk/path.bash.inc"
 # don't put duplicate lines or lines starting with space in the history.
 # See bash(1) for more options
 HISTCONTROL=ignorespace
@@ -47,15 +40,10 @@ fi
 export BASH_SILENCE_DEPRECATION_WARNING=1
 
 export EDITOR=vim
+export PATH="$HOME/.yarn/bin:$PATH"
+export PATH="$HOME/go/bin:$PATH"
 export PATH=$HOME/bin:/usr/local/bin:$PATH
-#export GOPATH=$HOME/go
-#export PATH=$GOPATH/bin:$PATH
-export PATH=$HOME/go/bin:$PATH
-export PATH="/opt/homebrew/bin:$PATH"
-export PATH=$HOME/.cargo/bin:$PATH
-export PATH=$HOME/.local/bin:$PATH
-export PATH=/home/user/.config/yarn/global/node_modules/.bin:$PATH
-export PATH="/Users/tmc/.deno/bin:$PATH"
+source $(brew --prefix)/etc/bash_completion
 export PATH="${KREW_ROOT:-$HOME/.krew}/bin:$PATH"
 export PATH="/opt/homebrew/opt/node@18/bin:$PATH"
 source "$(brew --prefix)/etc/bash_completion.d/git-prompt.sh"

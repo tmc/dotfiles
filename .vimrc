@@ -65,8 +65,6 @@ Plug 'vim-scripts/dbext.vim'
 Plug 'dense-analysis/ale'
 Plug 'bufbuild/vim-buf'
 Plug 'whiteinge/diffconflicts'
-Plug 'tomlion/vim-solidity'
-" Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'github/copilot.vim'
 " Plug 'neoclide/coc.nvim', {'branch': 'release'}
 if !has('nvim')
@@ -105,6 +103,7 @@ set path+=**
 set switchbuf=useopen,usetab
 
 set history=10000
+set exrc
 
 if !has('nvim')
   set cryptmethod=blowfish2
@@ -181,6 +180,8 @@ set belloff+=ctrlg
 map <C-n> :cnext<CR>
 map <C-p> :cprevious<CR>
 nnoremap <leader>a :cclose<CR>
+nmap <silent> <C-k> <Plug>(ale_previous_wrap)
+nmap <silent> <C-j> <Plug>(ale_next_wrap)
 
 inoremap . .<C-x><C-o>
 
@@ -232,26 +233,33 @@ let g:gutentags_cache_dir = '~/.vim/tags'
 " plugin configuration {{{
 " ale
 let g:ale_completion_enabled=1
+"let g:ale_floating_preview = 1
+let g:ale_set_balloons = 1
+"let g:ale_hover_to_preview = 1
+let g:ale_hover_to_floating_preview = 1
 let g:ale_python_pyls_executable='pyls'
+let g:go_gopls_options = ['-rpc.trace']
 let g:go_def_mode='gopls'
 let g:go_info_mode='gopls'
 let g:go_doc_url='https://pkg.go.dev/'
 let g:ale_linters = {
 \  'go': ['gopls'],
+\  'python': ['pyright'],
 \  'cpp': ['clang'],
-\  'python': ['pyls'],
-\  'proto': ['buf-check-lint',],
+\  'proto': ['buf-check-lint'],
 \}
 " \  'typescript': ['tsserver', 'typecheck', 'tslint'],
 " \  'typescript': ['tslint'],
 let g:ale_fixers = {
 \  'java': ['google_java_format'],
+\  'python': ['black'],
 \  'javascript': ['eslint', 'prettier'],
+\  'typescript': ['eslint','prettier'],
+\  'typescriptreact': ['eslint','prettier'],
 \  'javascript.jsx': ['eslint', 'prettier'],
 \  'jsx': ['eslint', 'prettier'],
 \}
-"\  'typescript': ['eslint','prettier','tslint', 'trim_whitespace'],
-" let g:ale_fix_on_save=1
+let g:ale_fix_on_save=1
 let g:ale_history_enabled = 1
 let g:ale_history_log_output = 1
 let g:airline#extensions#ale#enabled = 1
@@ -281,7 +289,6 @@ let g:vimgrep_rg_command="rg --vimgrep --color=never --no-heading"
 
 "}}}
 
-" language support {{{
 " LSP
 nmap <Leader>gd :ALEGoToDefinition <CR>
 

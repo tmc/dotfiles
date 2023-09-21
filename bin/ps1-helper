@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 # populate ps1 content asynchronously.
 set -euo pipefail
 
@@ -26,7 +26,11 @@ set -euo pipefail
     if [ -x "${HOME}/bin/ps1-helper-local" ]; then
       ~/bin/ps1-helper-local
     fi
-    echo "$(date) gcloud: $(gcloud config configurations list --filter=is_active:true | grep True | awk '{print $1}') $(gcloud config -q get-value project 2>/dev/null)"
+    echo -n "$(date)"
+    echo -n " gcloud: $(gcloud config configurations list --filter=is_active:true | grep True | awk '{print $1}') $(gcloud config -q get-value project 2>/dev/null)"
+    # print current kubernetes context:
+    echo -n " k8s: $(kubectl config current-context 2>/dev/null)"
+    echo
     # Check for the existence of bash history backup script in cron jobs
     if ! crontab -l 2>&1 | grep -q 'backup-bash-history'; then
         echo "Warning: bash history backup script is not in crontab"
