@@ -47,3 +47,5 @@ source $(brew --prefix)/etc/bash_completion
 export PATH="${KREW_ROOT:-$HOME/.krew}/bin:$PATH"
 export PATH="/opt/homebrew/opt/node@18/bin:$PATH"
 source "$(brew --prefix)/etc/bash_completion.d/git-prompt.sh"
+eval "$(github-copilot-cli alias -- "$0")"
+
