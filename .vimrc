@@ -238,6 +238,7 @@ let g:ale_set_balloons = 1
 "let g:ale_hover_to_preview = 1
 let g:ale_hover_to_floating_preview = 1
 let g:ale_python_pyls_executable='pyls'
+let g:ale_python_auto_virtualenv = 1
 let g:go_gopls_options = ['-rpc.trace']
 let g:go_def_mode='gopls'
 let g:go_info_mode='gopls'
