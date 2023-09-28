@@ -23,6 +23,7 @@ PROMPT_COMMAND="${PROMPT_COMMAND:+$PROMPT_COMMAND$'\n'}history -a; history -n"
 PS1='\[\033[1;31m\]$(prompt_status)\[\033[01;34m\]${debian_chroot:+($debian_chroot)}\[\033[01;30m\]\[\033[00m\]\n\[\033[01;32m\]\u@vmbp\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\] $ '
 PS1='\[\033[1;31m\]$(prompt_status)\[\033[01;34m\]${debian_chroot:+($debian_chroot)}\[\033[01;30m\]\[\033[00m\]\n\[\033[01;32m\]\u@$(hostname)\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\] $ '
 PS1='$(prompt_status)\[\033[01;30m\]$(cat ~/.ps1-output-cache)\[\033[00m\]\n\[\033[01;32m\]\u@vmbp\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]$(__git_ps1 "(%s)") $ '
+PS1='\[\033[01;30m\]$(cat ~/.ps1-output-cache)\[\033[00m\]\n\[\033[01;32m\]\u@vmbp\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]$(__git_ps1 "(%s)") $ '
 
 #PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@vmbp\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\] $ '
 
@@ -34,6 +35,9 @@ if [ -f ~/.sh_aliases ]; then
 fi
 if [ -f ~/.sh_aliases_local ]; then
        . ~/.sh_aliases_local
+fi
+if [ -f ~/.bashrc_local ]; then
+       . ~/.bashrc_local
 fi
 
 
