@@ -157,7 +157,7 @@ set incsearch
 
 packadd! matchit
 " color to col 128
-set synmaxcol=128
+"set synmaxcol=128
 " folds
 set foldcolumn=3
 set foldlevel=2
@@ -317,7 +317,7 @@ au Filetype go nmap <leader>l :GoLint <CR>
 au FileType go nmap <Leader>dd <Plug>(go-doc)
 au FileType go nmap <Leader>db <Plug>(go-doc-browser)
 au FileType go nmap <Leader>c <Plug>(go-coverage-toggle)
-au FileType go nmap <Leader>C :GoGoverageBrowser <CR>
+au FileType go nmap <Leader>C :GoCoverageBrowser <CR>
 "}}}
 
 " eslint fix
