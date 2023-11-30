@@ -3,7 +3,11 @@ case $- in
 *i*) ;;
 *) return ;;
 esac
-export PATH=/opt/homebrew/bin/:$PATH
+if [ "$(arch)" = "arm64" ]; then
+    eval "$(/opt/homebrew/bin/brew shellenv)"
+else
+    eval "$(/usr/local/bin/brew shellenv)"
+fi
 
 source "$(brew --prefix)/share/google-cloud-sdk/path.bash.inc"
 # don't put duplicate lines or lines starting with space in the history.
@@ -27,6 +31,20 @@ PS1='\[\033[01;30m\]$(cat ~/.ps1-output-cache)\[\033[00m\]\n\[\033[01;32m\]\u@vm
 
 #PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@vmbp\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\] $ '
 
+export BASH_SILENCE_DEPRECATION_WARNING=1
+
+export EDITOR=vim
+export PATH="$HOME/.yarn/bin:$PATH"
+export PATH="$HOME/.cargo/bin:$PATH"
+export PATH="$HOME/go/bin:$PATH"
+export PATH=$HOME/bin:$PATH
+#source $(brew --prefix)/etc/bash_completion
+export PATH="${KREW_ROOT:-$HOME/.krew}/bin:$PATH"
+source "$(brew --prefix)/etc/bash_completion.d/git-prompt.sh"
+eval "$(github-copilot-cli alias -- "$0")"
+
+
+[[ -r "/opt/homebrew/etc/profile.d/bash_completion.sh" ]] && . "/opt/homebrew/etc/profile.d/bash_completion.sh"
 if [ -f ~/.bash_aliases ]; then
        . ~/.bash_aliases
 fi
@@ -39,17 +57,3 @@ fi
 if [ -f ~/.bashrc_local ]; then
        . ~/.bashrc_local
 fi
-
-
-export BASH_SILENCE_DEPRECATION_WARNING=1
-
-export EDITOR=vim
-export PATH="$HOME/.yarn/bin:$PATH"
-export PATH="$HOME/go/bin:$PATH"
-export PATH=$HOME/bin:/usr/local/bin:$PATH
-source $(brew --prefix)/etc/bash_completion
-export PATH="${KREW_ROOT:-$HOME/.krew}/bin:$PATH"
-export PATH="/opt/homebrew/opt/node@18/bin:$PATH"
-source "$(brew --prefix)/etc/bash_completion.d/git-prompt.sh"
-eval "$(github-copilot-cli alias -- "$0")"
-

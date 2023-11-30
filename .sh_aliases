@@ -72,10 +72,6 @@ alias tf=terraform
 alias :e=vim
 alias :wq=exit
 alias :q=exit
-if command -v gcloud > /dev/null; then
-  alias opengke="open https://console.cloud.google.com/kubernetes/list?project=$(gcloud config get-value project)"
-  alias opencloudrun="open https://console.cloud.google.com/run?project=$(gcloud config get-value project)"
-fi
 alias gd="git diff"
 alias ghb="gh repo view -w"
 alias ghpr="gh pr view -w"
@@ -95,3 +91,5 @@ alias sc="cd ~/go/src/github.com/tmc/sc"
 alias lc="cd ~/go/src/github.com/tmc/langchaingo"
 alias run-pkgsite="go run golang.org/x/pkgsite/cmd/pkgsite@latest -open"
 alias pn=pnpm
+alias gp='git push'
+alias gpu='git pull'

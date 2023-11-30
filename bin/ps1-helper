@@ -27,7 +27,7 @@ set -euo pipefail
       ~/bin/ps1-helper-local
     fi
     echo -n "$(date)"
-    echo -n " gcloud: $(gcloud config configurations list --filter=is_active:true | grep True | awk '{print $1}') $(gcloud config -q get-value project 2>/dev/null)"
+    echo -n " gcloud: $(gcloud -q config configurations list --filter=is_active:true | grep True | awk '{print $1}') $(gcloud config -q get-value project 2>/dev/null)"
     # print current kubernetes context:
     echo -n " k8s: $(kubectl config current-context 2>/dev/null)"
     echo

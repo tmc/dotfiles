@@ -700,7 +700,7 @@
 			<key>Screen</key>
 			<integer>-1</integer>
 			<key>Scrollback Lines</key>
-			<integer>9999999</integer>
+			<integer>999999</integer>
 			<key>Selected Text Color</key>
 			<dict>
 				<key>Blue Component</key>
