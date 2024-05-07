@@ -4,6 +4,11 @@
 <dict>
 	<key>Coprocess MRU</key>
 	<array>
+		<string>echo vim /Users/tmc/go/src/github.com/brevdev/dev-plane/internal/instance/service_test.go +82</string>
+		<string>echo vim /Users/tmc/go/src/github.com/brevdev/brev-deploy/internal/routes/instance_type_test.go +18</string>
+		<string>echo vim /Users/tmc/go/src/github.com/brevdev/brev-deploy/internal/routes/workspace.go +</string>
+		<string>echo vim /Users/tmc/go/src/github.com/brevdev/dev-plane/internal/billingprofile/stripe.go +1440</string>
+		<string>echo vim /Users/tmc/go/src/github.com/progrium/macdriver/macos/_examples/screencap/main.go +122</string>
 		<string>echo vim /Users/tmc/go/src/github.com/tmc/langchaingo/embeddings/vector_math_test.go +27</string>
 		<string>echo vim /Users/tmc/go/src/github.com/tmc/langchaingo/embeddings/vector_math_test.go +81</string>
 		<string>echo vim /Users/tmc/go/src/github.com/tmc/langchaingo/vectorstores/weaviate/weaviate.go +160</string>
@@ -19,8 +24,6 @@
 		<string>echo vim /Users/tmc/go/src/github.com/ariga/atlas/internal/integration/spanner_test.go +59</string>
 		<string>echo vim /Users/tmc/go/src/github.com/ariga/atlas/internal/integration/integration_test.go +525</string>
 		<string>echo vim /Users/tmc/go/src/github.com/ariga/atlas/internal/integration/spanner_test.go +100</string>
-		<string>echo vim /Users/tmc/go/src/github.com/ariga/atlas/internal/integration/spanner_test.go +1284</string>
-		<string>echo vim /Users/tmc/go/src/github.com/ariga/atlas/internal/integration/integration_test.go +622</string>
 	</array>
 	<key>Default Bookmark Guid</key>
 	<string>E2B90235-FD05-424C-85BA-D259CBB7939D</string>

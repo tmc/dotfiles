@@ -1,4 +1,5 @@
 #!/bin/bash
+# Check if there are any backups in the last 24h
 test -d ~/.vim-git-backups || exit 0
 cd ~/.vim-git-backups
 if [ "$(git rev-list --count --since='1 day' HEAD)" -eq "0" ]; then
