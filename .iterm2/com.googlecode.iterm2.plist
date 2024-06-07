@@ -2,29 +2,6 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>Coprocess MRU</key>
-	<array>
-		<string>echo vim /Users/tmc/go/src/github.com/brevdev/dev-plane/internal/instance/service_test.go +82</string>
-		<string>echo vim /Users/tmc/go/src/github.com/brevdev/brev-deploy/internal/routes/instance_type_test.go +18</string>
-		<string>echo vim /Users/tmc/go/src/github.com/brevdev/brev-deploy/internal/routes/workspace.go +</string>
-		<string>echo vim /Users/tmc/go/src/github.com/brevdev/dev-plane/internal/billingprofile/stripe.go +1440</string>
-		<string>echo vim /Users/tmc/go/src/github.com/progrium/macdriver/macos/_examples/screencap/main.go +122</string>
-		<string>echo vim /Users/tmc/go/src/github.com/tmc/langchaingo/embeddings/vector_math_test.go +27</string>
-		<string>echo vim /Users/tmc/go/src/github.com/tmc/langchaingo/embeddings/vector_math_test.go +81</string>
-		<string>echo vim /Users/tmc/go/src/github.com/tmc/langchaingo/vectorstores/weaviate/weaviate.go +160</string>
-		<string>echo vim /Users/tmc/go/src/github.com/tmc/langchaingo/embeddings/vertexai/vertexaichat/vertexai_chat.go +19</string>
-		<string>echo vim /Users/tmc/go/src/github.com/tmc/langchaingo/embeddings/vertexai/vertexai_palm.go +72</string>
-		<string>echo vim /Users/tmc/go/src/github.com/tmc/langchaingo/embeddings/huggingface/huggingface.go +21</string>
-		<string>echo vim /Users/tmc/go/src/github.com/tmc/langchaingo/embeddings/openai/openaichat/openai_chat.go +70</string>
-		<string>echo vim /Users/tmc/go/src/github.com/tmc/langchaingo/embeddings/ernie/ernie.go +18</string>
-		<string>echo vim /Users/tmc/go/src/github.com/tmc/langchaingo/embeddings/openai/openai.go +19</string>
-		<string>echo vim /Users/tmc/go/src/github.com/tmc/hackathon-starter/react-frontend/src/gqlClient.ts +</string>
-		<string>echo vim /Users/tmc/go/src/github.com/tmc/langchaingo/exp/documentLoaders/textLoader.go +6</string>
-		<string>echo vim /Users/tmc/go/src/github.com/ariga/atlas/internal/integration/integration_test.go +529</string>
-		<string>echo vim /Users/tmc/go/src/github.com/ariga/atlas/internal/integration/spanner_test.go +59</string>
-		<string>echo vim /Users/tmc/go/src/github.com/ariga/atlas/internal/integration/integration_test.go +525</string>
-		<string>echo vim /Users/tmc/go/src/github.com/ariga/atlas/internal/integration/spanner_test.go +100</string>
-	</array>
 	<key>Default Bookmark Guid</key>
 	<string>E2B90235-FD05-424C-85BA-D259CBB7939D</string>
 	<key>EscapeShellCharsWithBackslash</key>
@@ -1039,6 +1016,8 @@
 	</dict>
 	<key>Print In Black And White</key>
 	<true/>
+	<key>ShowFullScreenTabBar</key>
+	<false/>
 	<key>SmartPlacement</key>
 	<true/>
 	<key>SoundForEsc</key>
