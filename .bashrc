@@ -35,6 +35,18 @@ PS1='\[\033[1;31m\]$(prompt_status)\[\033[01;34m\]${debian_chroot:+($debian_chro
 PS1='$(prompt_status)\[\033[01;30m\]$(cat ~/.ps1-output-cache)\[\033[00m\]\n\[\033[01;32m\]\u@vmbp\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]$(__git_ps1 "(%s)") $ '
 PS1='\[\033[01;30m\]$(cat ~/.ps1-output-cache)\[\033[00m\]\n\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]$(__git_ps1 "(%s)") $ '
 
+export EDITOR=vim
+export PATH="$HOME/.yarn/bin:$PATH"
+export PATH="$HOME/.cargo/bin:$PATH"
+export PATH="$HOME/go/bin:$PATH"
+export PATH=$HOME/bin:$PATH
+
+# if macos brew directory exists, add it to the path:
+if [ -d /opt/homebrew/bin ]; then
+    export PATH="/opt/homebrew/bin:$PATH"
+fi
+
+
 if ! declare -f __git_ps1 > /dev/null; then
     PS1='\[\033[01;30m\]$(cat ~/.ps1-output-cache)\[\033[00m\]\n\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\] $ '
 fi
@@ -43,16 +55,11 @@ fi
 
 export BASH_SILENCE_DEPRECATION_WARNING=1
 
-export EDITOR=vim
-export PATH="$HOME/.yarn/bin:$PATH"
-export PATH="$HOME/.cargo/bin:$PATH"
-export PATH="$HOME/go/bin:$PATH"
-export PATH=$HOME/bin:$PATH
 #source $(brew --prefix)/etc/bash_completion
 export PATH="${KREW_ROOT:-$HOME/.krew}/bin:$PATH"
 
 # if brew exists and the git-prompt.sh file exists, source it
-if [ command -v brew >/dev/null 2>&1 ]; then
+if command -v brew >/dev/null 2>&1; then
     git_prompt_file="$(brew --prefix)/etc/bash_completion.d/git-prompt.sh"
     if [ -f "$git_prompt_file" ]; then
         source "$git_prompt_file"
