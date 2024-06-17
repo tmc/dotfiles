@@ -1,0 +1,1 @@
+cat testout.json | jq -r 'select(.Action == "pass" and .Test != null) | .Test + "," + (.Elapsed | tostring)' | sort -k2 -n -t, |tail -n10

@@ -1,0 +1,2 @@
+#!/bin/bash
+PRESENT_MOD_FILE=~/go/src/github.com/tmc/talks/gopherconeu/go.mod present -notes -content /Users/tmc/go/src/github.com/tmc/talks/gopherconeu
