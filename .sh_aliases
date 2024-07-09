@@ -104,3 +104,4 @@ alias pn=pnpm
 alias gp='git push'
 alias gti=git
 alias gpu='git pull'
+alias glm='cd ~/go/src/gitlab-m*'
