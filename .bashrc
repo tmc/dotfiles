@@ -22,6 +22,8 @@ shopt -s histappend
 # for setting history length see HISTSIZE and HISTFILESIZE in bash(1)
 HISTSIZE=10000000
 HISTFILESIZE=200000000
+#export HISTTIMEFORMAT="%s "
+#alias historyiso='HISTTIMEFORMAT="%Y-%m-%dT%H:%M:%S " history'
 if [ -f "${HOME}/bin/ps1-helper" ]; then
     PROMPT_COMMAND="~/bin/ps1-helper"
 fi

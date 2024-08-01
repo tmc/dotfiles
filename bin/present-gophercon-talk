@@ -1,2 +1,5 @@
 #!/bin/bash
-PRESENT_MOD_FILE=~/go/src/github.com/tmc/talks/gopherconeu/go.mod present -notes -content /Users/tmc/go/src/github.com/tmc/talks/gopherconeu
+PRESENT_MOD_FILE=~/go/src/github.com/tmc/talks/gopherconeu/go.mod present -notes -content /Users/tmc/go/src/github.com/tmc/talks/gopherconeu &
+
+sleep 0.1; open http://127.0.0.1:3999/building-ai-applications-in-go.slide#1
+wait
