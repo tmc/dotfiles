@@ -2,8 +2,9 @@
 " don't panic.
 " Also, don't blindly use someone else's editor configuration.
 ""{{{ bootstrap (automatically install vim-plug in new environments)
+let g:plug_use_lockfile = 1
 if empty(glob('~/.vim/autoload/plug.vim'))
-  silent !curl -sfLo ~/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+  silent !curl -sfLo ~/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/d80f495fabff8446972b8695ba251ca636a047b0/plug.vim
   autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
 endif
 "}}}
@@ -61,6 +62,7 @@ Plug 'pedrohdz/vim-yaml-folds'
 Plug 'rhysd/git-messenger.vim'
 Plug 'somini/vim-textobj-fold'
 Plug 'tmc/vimscripts', { 'rtp': 'git-backups', 'as': 'tmc-git-backups' }
+Plug 'tmc/cgpt', { 'rtp': 'vim', 'do': 'go install ./cmd/cgpt' }
 Plug 'vim-scripts/dbext.vim'
 Plug 'dense-analysis/ale'
 Plug 'bufbuild/vim-buf'
@@ -119,10 +121,11 @@ set encoding=utf-8
 set laststatus=2
 set relativenumber
 set number
-set statusline+=%{gutentags#statusline()}
 
-" tag config
-" let g:gutentags_trace = 1
+"let g:gutentags_trace = 1
+
+let g:localvimrc_persistent=2
+let g:plug_use_lockfile = 1
 
 " undo,backup,swap
 set swapfile
@@ -213,9 +216,9 @@ imap <C-k>     <Plug>(neosnippet_expand_or_jump)
 smap <C-k>     <Plug>(neosnippet_expand_or_jump)
 xmap <C-k>     <Plug>(neosnippet_expand_target)
 
-vnoremap <leader>p :<C-U>ShadenPatchSelection<CR>
-nnoremap <leader>p :<C-U>ShadenPatchLine<CR>
-nnoremap <leader>r :<C-U>ShadenRepatch<CR>
+" vnoremap <leader>p :<C-U>ShadenPatchSelection<CR>
+" nnoremap <leader>p :<C-U>ShadenPatchLine<CR>
+" nnoremap <leader>r :<C-U>ShadenRepatch<CR>
 
 " let g:netrw_http_xcmd='-s -n -o'
 "}}}
@@ -236,7 +239,7 @@ let g:ale_completion_enabled=1
 "let g:ale_floating_preview = 1
 let g:ale_set_balloons = 1
 "let g:ale_hover_to_preview = 1
-"let g:ale_hover_to_floating_preview = 1
+let g:ale_hover_to_floating_preview = 1
 let g:ale_python_pyls_executable='pyls'
 let g:ale_python_auto_virtualenv = 1
 let g:go_gopls_options = ['-rpc.trace']
@@ -347,5 +350,7 @@ let yaml_fmt = "yamlfmt /dev/stdin"
 au FileType helm let &l:formatprg=yaml_fmt
 
 "}}}
+
+" let g:cgpt_system_prompt = "You are a an expert programming assistant. You are directly replacing what is selected in a vim buffer, include no code guards."
 
 " vim:foldmethod=marker foldlevel=1
