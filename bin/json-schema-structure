@@ -1,0 +1,7 @@
+jq -r '
+path(..)|
+  map(
+    if type=="number" then "[]" else tostring end
+  )|
+  join(".")
+' sample-har.har | sort -u
