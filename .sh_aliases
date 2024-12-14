@@ -102,3 +102,10 @@ alias gp='git push'
 alias gti=git
 alias gpu='git pull'
 alias glm='cd ~/go/src/gitlab-m*'
+
+
+# Detect OS and set clipboard aliases accordingly
+if [[ "$OSTYPE" != "darwin"* ]]; then
+    alias pbpaste='wl-paste'
+    alias pbcopy='wl-copy'
+fi

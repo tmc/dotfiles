@@ -1,8 +1,10 @@
 " tmc's vimrc
+" 
 " don't panic.
-" Also, don't blindly use someone else's editor configuration.
+" Also, don't blindly use cargo cult someone else's editor configuration!
+" 
 ""{{{ bootstrap (automatically install vim-plug in new environments)
-let g:plug_use_lockfile = 1
+
 if empty(glob('~/.vim/autoload/plug.vim'))
   silent !curl -sfLo ~/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/d80f495fabff8446972b8695ba251ca636a047b0/plug.vim
   autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
@@ -20,75 +22,38 @@ Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-sleuth'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-unimpaired'
-Plug 'wsdjeg/vim-fetch'
 Plug 'tpope/vim-dispatch'
+Plug 'tpope/vim-fugitive'
 "Plug 'tpope/vim-sensible'
+"Plug 'wsdjeg/vim-fetch'
+"Plug 'tpope/vim-rhubarb'
 "}}}
 " tools {{{
-Plug 'LucHermitte/lh-vim-lib'
-Plug 'LucHermitte/local_vimrc'
-Plug 'Shougo/vinarise.vim'
-Plug 'chrisjohnson/vim-grep'
-"Plug 'majutsushi/tagbar'
-Plug 'markonm/traces.vim'
-Plug 'mbbill/undotree'
-Plug 'terryma/vim-expand-region'
-Plug 'tpope/vim-fugitive'
-Plug 'tpope/vim-rhubarb'
-Plug 'ludovicchabant/vim-gutentags'
-"}}}
-" flair {{{
-Plug 'airblade/vim-gitgutter'
-Plug 'nanotech/jellybeans.vim'
-Plug 'vim-airline/vim-airline'
-Plug 'vim-airline/vim-airline-themes'
-"}}}
-" completion+snippets {{{
-Plug 'Shougo/neosnippet-snippets'
-Plug 'Shougo/neosnippet.vim'
-"Plug 'Shougo/neocomplete.vim'
-"}}}
-" experiments {{{
-Plug 'chiedo/vim-px-to-em'
-Plug 'bazelbuild/vim-bazel'
-Plug 'junegunn/fzf.vim'
-Plug 'terrastruct/d2-vim'
-"Plug 'dbeniamine/cheat.sh-vim'
-Plug 'google/vim-maktaba'
-Plug 'hashivim/vim-terraform'
-Plug 'kana/vim-textobj-user'
-Plug 'michaeljsmith/vim-indent-object'
-Plug 'pedrohdz/vim-yaml-folds'
-Plug 'rhysd/git-messenger.vim'
-Plug 'somini/vim-textobj-fold'
 Plug 'tmc/vimscripts', { 'rtp': 'git-backups', 'as': 'tmc-git-backups' }
 Plug 'tmc/cgpt', { 'rtp': 'vim', 'do': 'go install ./cmd/cgpt' }
-Plug 'vim-scripts/dbext.vim'
 Plug 'dense-analysis/ale'
-Plug 'bufbuild/vim-buf'
 Plug 'whiteinge/diffconflicts'
 Plug 'github/copilot.vim'
-" Plug 'neoclide/coc.nvim', {'branch': 'release'}
 if !has('nvim')
   Plug 'tmc/vimscripts', { 'rtp': 'git-backups', 'as': 'tmc-git-backups' }
 endif
-""}}}
 
+"Plug 'markonm/traces.vim'
+"Plug 'mbbill/undotree'
+"Plug 'terryma/vim-expand-region'
+"}}}
+" flair {{{
+"Plug 'airblade/vim-gitgutter'
+Plug 'nanotech/jellybeans.vim'
+"Plug 'vim-airline/vim-airline'
+"Plug 'vim-airline/vim-airline-themes'
+"}}}
+" experiments {{{
+""}}}
 " language support {{{
-"Plug 'Quramy/tsuquyomi'
-Plug 'cappyzawa/starlark.vim'
 Plug 'fatih/vim-go'
-"Plug 'davidhalter/jedi-vim'
-Plug 'gf3/peg.vim'
-" Plug 'othree/javascript-libraries-syntax.vim'
-" Plug 'rhysd/vim-grammarous'
 Plug 'sheerun/vim-polyglot'
-" Plug 'suan/vim-instant-markdown'
-Plug 'tpope/vim-bundler'
-" Plug 'tpope/vim-markdown'
-Plug 'tpope/vim-rails'
-Plug 'vadv/vim-chef'
-Plug 'vim-scripts/SWIG-syntax'
+Plug 'tpope/vim-markdown'
 "}}}
 call plug#end()
 "}}}
