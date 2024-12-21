@@ -11,10 +11,12 @@ if empty(glob('~/.vim/autoload/plug.vim'))
 endif
 "}}}
 
+
 " plugins {{{
 call plug#begin()
-Plug 'junegunn/vim-plug'
+
 " core plugins {{{
+Plug 'junegunn/vim-plug'
 Plug 'kien/ctrlp.vim'
 Plug 'tpope/vim-abolish'
 Plug 'tpope/vim-commentary'
@@ -24,37 +26,38 @@ Plug 'tpope/vim-surround'
 Plug 'tpope/vim-unimpaired'
 Plug 'tpope/vim-dispatch'
 Plug 'tpope/vim-fugitive'
-"Plug 'tpope/vim-sensible'
-"Plug 'wsdjeg/vim-fetch'
-"Plug 'tpope/vim-rhubarb'
 "}}}
+
 " tools {{{
 Plug 'tmc/vimscripts', { 'rtp': 'git-backups', 'as': 'tmc-git-backups' }
 Plug 'tmc/cgpt', { 'rtp': 'vim', 'do': 'go install ./cmd/cgpt' }
+Plug 'chrisjohnson/vim-grep'
+Plug 'markonm/traces.vim'
+Plug 'mbbill/undotree'
+Plug 'ludovicchabant/vim-gutentags'
+"}}}
+
+" flair {{{
+Plug 'airblade/vim-gitgutter'
+Plug 'nanotech/jellybeans.vim'
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
+"}}}
+
+" experiments {{{
+Plug 'google/vim-maktaba'
+Plug 'pedrohdz/vim-yaml-folds'
 Plug 'dense-analysis/ale'
 Plug 'whiteinge/diffconflicts'
 Plug 'github/copilot.vim'
-if !has('nvim')
-  Plug 'tmc/vimscripts', { 'rtp': 'git-backups', 'as': 'tmc-git-backups' }
-endif
+"}}}
 
-"Plug 'markonm/traces.vim'
-"Plug 'mbbill/undotree'
-"Plug 'terryma/vim-expand-region'
-"}}}
-" flair {{{
-"Plug 'airblade/vim-gitgutter'
-Plug 'nanotech/jellybeans.vim'
-"Plug 'vim-airline/vim-airline'
-"Plug 'vim-airline/vim-airline-themes'
-"}}}
-" experiments {{{
-""}}}
 " language support {{{
 Plug 'fatih/vim-go'
 Plug 'sheerun/vim-polyglot'
-Plug 'tpope/vim-markdown'
+Plug 'tpope/vim-bundler'
 "}}}
+
 call plug#end()
 "}}}
 
@@ -211,6 +214,9 @@ let g:go_gopls_options = ['-rpc.trace']
 let g:go_def_mode='gopls'
 let g:go_info_mode='gopls'
 let g:go_doc_url='https://pkg.go.dev/'
+let g:ale_go_golangci_lint_package = 1
+let g:ale_go_golangci_lint_options = '--fast'
+" \  'go': ['gopls', 'golangci-lint'],
 let g:ale_linters = {
 \  'go': ['gopls'],
 \  'python': ['pyright'],
@@ -227,8 +233,9 @@ let g:ale_fixers = {
 \  'typescriptreact': ['eslint','prettier'],
 \  'javascript.jsx': ['eslint', 'prettier'],
 \  'jsx': ['eslint', 'prettier'],
+\   '*': ['cgpt'],
 \}
-let g:ale_fix_on_save=1
+" let g:ale_fix_on_save=1
 let g:ale_history_enabled = 1
 let g:ale_history_log_output = 1
 let g:airline#extensions#ale#enabled = 1
