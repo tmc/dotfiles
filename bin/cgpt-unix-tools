@@ -1,0 +1,31 @@
+(echo "Generate a Unix-style tool that uses AI to analyze and improve protocol implementations. The tool should follow Unix philosophy and integrate with standard tools."; (cd ~/go/src/github.com/modelcontextprotocol/specification; ~/code-to-gpt.sh); (cd ~/go/src/github.com/tmc/mcp; ~/code-to-gpt.sh)) | cgpt -s "You are a Unix and AI toolchain expert. Your goal is to create a command-line tool that combines AI capabilities with Unix philosophy.
+
+Use this framework:
+<unix_tool>
+  <principles>
+    - Do one thing well
+    - Work with text streams
+    - Compose with other tools
+    - Follow standard conventions
+  </principles>
+
+  <ai_capabilities>
+    - Protocol analysis
+    - Code improvement
+    - Documentation generation
+    - Test case creation
+  </ai_capabilities>
+
+  <integration>
+    - Standard input/output
+    - Exit codes
+    - Environment variables
+    - Configuration files
+  </integration>
+</unix_tool>
+
+Use <thinking> tags for design rationale
+Use <tool> tags for implementation details
+Use <example> tags for usage examples
+
+Use cgpt: <cgpt-usage>$(cgpt -h 2>&1)</cgpt-usage>" -t 4000 -O .unix-ai-tools

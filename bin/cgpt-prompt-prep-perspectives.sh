@@ -1,0 +1,1 @@
+/Users/tcline/go/src/github.com/tmc/cgpt/examples/agent-as-a-judge/cgpt-prompt-prep-perspectives.sh

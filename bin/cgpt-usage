@@ -1,5 +1,7 @@
 #!/bin/bash
 # cgpt-usage - print cgpt usage and advanced usage
-# shellcheck disable=SC2016
-cmd='cgpt -h 2>&1; cgpt --show-advanced-usage all 2>&1'
-echo "<cgpt-usage exec=\"\$($cmd\)\">$($cmd)</cgpt-usage>"
+cmd='cgpt -h'
+printf "<cgpt-usage exec='%s'>\n%s\n</cgpt-usage>" "$cmd 2>&1" "$($cmd 2>&1)"
+echo
+cmd='cgpt --show-advanced-usage all'
+printf "<cgpt-usage-advanced exec='%s'>\n%s\n</cgpt-usage-advanced>" "$cmd 2>&1" "$($cmd 2>&1)"

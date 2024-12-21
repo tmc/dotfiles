@@ -1,0 +1,40 @@
+#!/bin/bash
+
+# Get the scripttest format
+SCRIPTTEST_FORMAT=$(print-scripttest-prompt)
+
+# Function to generate a test
+generate_test() {
+    local test_name=$1
+    local codebase=$2
+
+    echo "Generating test: $test_name"
+    
+    (echo "<initial-intent>
+<test-request>$test_name</test-request>
+<codebase>$codebase</codebase>
+</initial-intent>" | cgpt -O ~/.cgpt-hist-"$(date +%s)" -s "You are a scripttest test generator.
+Use this test format knowledge:
+$SCRIPTTEST_FORMAT
+
+Generate a test that:
+1. Follows scripttest patterns
+2. Tests the requested functionality
+3. Includes both success and failure cases
+4. Uses appropriate commands
+5. Verifies results properly
+
+Use these tags in your response:
+<test-case>The actual test content</test-case>
+<explanation>Why you structured the test this way</explanation>
+<verification>How to verify the test works</verification>")
+}
+
+# Main execution
+if [ "$1" = "" ]; then
+    echo "Usage: $0 test-name"
+    exit 1
+fi
+
+# Generate the test
+generate_test "$1" "$(~/code-to-gpt.sh)"
