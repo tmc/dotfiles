@@ -1,5 +1,5 @@
 brew "mas"
-cask "iterm2"
+#cask "iterm2"
 #cask "google-chrome"
 #mas "1Password", id: 443987910
 # This takes a long time to install
@@ -8,7 +8,6 @@ cask "iterm2"
 brew "bash-completion"
 brew "gh"
 brew "git"
-brew "github"
 brew "go"
 brew "postgresql"
 brew "python"

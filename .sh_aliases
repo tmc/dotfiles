@@ -109,3 +109,4 @@ if [[ "$OSTYPE" != "darwin"* ]]; then
     alias pbpaste='wl-paste'
     alias pbcopy='wl-copy'
 fi
+alias cursor-run='osascript -e '\''tell application "Cursor" to activate; tell application "System Events" to tell process "Cursor" to keystroke return using command down'\'

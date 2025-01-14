@@ -4,7 +4,7 @@ set -euo pipefail
 
 (
   # Check if gcloud is installed
-  command -v gcloud >/dev/null 2>&1 || { echo >&2 "gcloud required but it's not installed.  Aborting."; exit 1; }
+  #command -v gcloud >/dev/null 2>&1 || { echo >&2 "gcloud required but it's not installed.  Aborting."; exit 1; }
 
   # Lock file path
   lockfile=~/.ps1-output-cache.lock
@@ -27,14 +27,22 @@ set -euo pipefail
       ~/bin/ps1-helper-local
     fi
     echo -n "$(date)"
-    echo -n " gcloud: $(gcloud -q config configurations list --filter=is_active:true | grep True | awk '{print $1}') $(gcloud config -q get-value project 2>/dev/null)"
+    command -v gcloud >/dev/null 2>&1 && (
+      gcloudcfg=$(gcloud -q config configurations list --filter=is_active:true | grep True | awk '{print $1}')
+      gcloudproject=$(gcloud config get-value project 2>/dev/null)
+      echo -n " gcloud:(${gcloudcfg:-default},${gcloudproject:-none})"
+    )
+
+    # crontab count:
+    echo -n " cjs:$(crontab -l 2>/dev/null | grep -cv '^#|^$')"
+
     # print current kubernetes context:
     # echo -n " k8s: $(kubectl config current-context 2>/dev/null)"
     # echo
     # Check for the existence of bash history backup script in cron jobs
-    # if ! crontab -l 2>&1 | grep -q 'backup-bash-history'; then
-    #     echo "Warning: bash history backup script is not in crontab"
-    # fi
+    if ! crontab -l 2>&1 | grep -q 'backup-bash-history'; then
+        echo "Warning: bash history backup script is not in crontab"
+    fi
   ) > ~/.ps1-output-cache_
   mv ~/.ps1-output-cache{_,}
 ) &

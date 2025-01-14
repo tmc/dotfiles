@@ -1,7 +1,16 @@
 #!/bin/bash
 # cgpt-usage - print cgpt usage and advanced usage
-cmd='cgpt -h'
-printf "<cgpt-usage exec='%s'>\n%s\n</cgpt-usage>" "$cmd 2>&1" "$($cmd 2>&1)"
-echo
-cmd='cgpt --show-advanced-usage all'
-printf "<cgpt-usage-advanced exec='%s'>\n%s\n</cgpt-usage-advanced>" "$cmd 2>&1" "$($cmd 2>&1)"
+command -v ctx-exec > /dev/null || (
+  # make slightly grey:
+  [ -z "$SILENCE_CTX_EXEC" ] && echo -e "\033[90mPlease install ctx-exec first: go install github.com/tmc/misc/ctx-plugin/ctx-exec@latest\033[0m"
+  alias ctx-exec=ctx-exec-fallback
+)
+function ctx-exec-fallback() {
+	local tag="$1"
+	local cmd="$2"
+	# strip '-tag=' prefix:
+	tag="${tag#-tag=}"
+	echo "<$tag exec=\"$cmd\">$(eval "$cmd")</$tag>"
+}
+ctx-exec -tag=cgpt-usage 'cgpt -h 2>&1'
+ctx-exec -tag=cgpt-advanced-usage 'cgpt --show-advanced-usage all'
