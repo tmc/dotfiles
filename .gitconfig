@@ -23,6 +23,7 @@
 	edit-branch = !git rebase -i $(git merge-base origin/master HEAD)
 	edit-branch-develop = !git rebase -i $(git merge-base origin/develop HEAD)
 	d = difftool
+	fetchpr = !git fetch origin +refs/pull/*/head:refs/remotes/origin/pr/*
 
 
 [log]
@@ -95,19 +96,17 @@
 	newHighlight = green bold 22
 
 [commit]
-	#gpgsign = true
+	gpgsign = true
 
 [http]
 	cookiefile = /Users/tmc/.gitcookies
 [user]
 	name = Travis Cline
 	email = travis.cline@gmail.com
-	signingkey = 1B3869FEF61487F1
+	signingkey = /Users/tmc/.ssh/id_ed25519.pub
 [difftool]
 	prompt = false
-[credential "https://github.com"]
-	helper = 
-	helper = !/usr/bin/gh auth git-credential
-[credential "https://gist.github.com"]
-	helper = 
-	helper = !/usr/bin/gh auth git-credential
+[init]
+	defaultBranch = main
+[gpg]
+	format = ssh

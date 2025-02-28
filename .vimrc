@@ -99,13 +99,13 @@ let g:plug_use_lockfile = 1
 set swapfile
 set noswapfile
 set undofile
-set undodir=~/.vim/.undo/
-set backupdir=~/.vim/.backup/
-set directory=~/.vim/.swp/
+set undodir=~/.vim/.undo//
+set backupdir=~/.vim/.backup//
+set directory=~/.vim/.swp//
 if has('nvim')
-  set undodir=~/.vim/.nundo/
-  set backupdir=~/.vim/.nbackup/
-  set directory=~/.vim/.nswp/
+  set undodir=~/.vim/.nundo//
+  set backupdir=~/.vim/.nbackup//
+  set directory=~/.vim/.nswp//
 endif
 if !isdirectory("~/.vim/.swp")
     silent !mkdir ~/.vim/.swp > /dev/null 2>&1
