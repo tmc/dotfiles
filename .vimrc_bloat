@@ -1,0 +1,206 @@
+" tmc's vimrc
+" don't panic.
+" Also, don't blindly use someone else's editor configuration.
+""{{{ bootstrap (automatically install vim-plug in new environments)
+let g:plug_use_lockfile = 1
+if empty(glob('~/.vim/autoload/plug.vim'))
+  " Use vim-plug v0.14.0
+  silent !curl -sfLo ~/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/d80f495fabff8446972b8695ba251ca636a047b0/plug.vim
+  autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
+endif
+"}}}
+
+" plugins {{{
+call plug#begin()
+Plug 'junegunn/vim-plug'
+" core plugins {{{
+Plug 'kien/ctrlp.vim'
+Plug 'tpope/vim-abolish'
+Plug 'tpope/vim-commentary'
+Plug 'tpope/vim-repeat'
+Plug 'tpope/vim-sleuth'
+Plug 'tpope/vim-surround'
+Plug 'tpope/vim-unimpaired'
+Plug 'wsdjeg/vim-fetch'
+Plug 'tpope/vim-dispatch'
+"}}}
+" tools {{{
+if !exists('$NO_AI_FEATURES')
+  Plug 'tmc/cgpt', { 'rtp': 'vim', 'do': 'go install ./cmd/cgpt' }
+  Plug 'github/copilot.vim'
+endif
+Plug 'dense-analysis/ale'
+Plug 'bufbuild/vim-buf'
+Plug 'whiteinge/diffconflicts'
+Plug 'chrisjohnson/vim-grep'
+Plug 'markonm/traces.vim'
+Plug 'mbbill/undotree'
+Plug 'terryma/vim-expand-region'
+Plug 'tpope/vim-fugitive'
+Plug 'tpope/vim-rhubarb'
+Plug 'ludovicchabant/vim-gutentags'
+"}}}
+" flair {{{
+Plug 'airblade/vim-gitgutter'
+Plug 'nanotech/jellybeans.vim'
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
+"}}}
+" language support {{{
+Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
+Plug 'sheerun/vim-polyglot'
+Plug 'pangloss/vim-javascript'
+Plug 'leafgarland/typescript-vim'
+Plug 'peitalin/vim-jsx-typescript'
+"}}}
+call plug#end()
+"}}}
+
+" basics {{{
+set nocompatible
+set smartindent
+set autoindent
+set tabstop=4
+set backspace=indent,eol,start
+set path+=**
+set switchbuf=useopen,usetab
+set history=10000
+set exrc
+set encoding=utf-8
+set laststatus=2
+set relativenumber
+set number
+set wildmenu
+set wildmode=longest:full,full
+set wildignore+=**/node_modules/**,**/dist/**
+
+" undo,backup,swap
+set undofile
+set undodir=~/.vim/.undo//
+set backupdir=~/.vim/.backup//
+set directory=~/.vim/.swp//
+if has('nvim')
+  set undodir=~/.vim/.nundo//
+  set backupdir=~/.vim/.nbackup//
+  set directory=~/.vim/.nswp//
+endif
+if !isdirectory(expand(&undodir))
+    call mkdir(expand(&undodir), "p")
+    call mkdir(expand(&backupdir), "p")
+    call mkdir(expand(&directory), "p")
+endif
+
+" visuals
+set cursorline
+set ruler
+set modeline
+set t_Co=256
+let g:netrw_liststyle=3
+set bg=dark
+silent! colorscheme jellybeans
+set scrolloff=5
+
+" searching
+set hlsearch
+set incsearch
+
+" folds
+set foldcolumn=3
+set foldlevel=2
+set mouse=a
+"}}}
+
+" completion {{{
+set omnifunc=syntaxcomplete#Complete
+set completeopt=menuone,noselect,noinsert,preview
+set shortmess+=c
+set belloff+=ctrlg
+"}}}
+
+" language specific {{{
+" go {{{
+au BufNewFile,BufRead *.go setlocal noet ts=4 sw=4 sts=4
+let g:go_fmt_command = "goimports"
+let g:go_gopls_options = ['-rpc.trace']
+let g:go_def_mode='gopls'
+let g:go_info_mode='gopls'
+let g:go_doc_url='https://pkg.go.dev/'
+
+au FileType go nmap <Leader>t :GoTest<CR>
+au FileType go nmap <Leader>b :GoBuild<CR>
+au FileType go nmap <Leader>r :GoRun<CR>
+au FileType go nmap <Leader>d :GoDef<CR>
+au FileType go nmap <Leader>c :GoCoverageToggle<CR>
+"}}}
+
+" typescript {{{
+autocmd BufNewFile,BufRead *.ts,*.tsx setlocal filetype=typescript
+let g:ale_linters = {
+\  'typescript': ['eslint', 'tsserver'],
+\  'typescriptreact': ['eslint', 'tsserver'],
+\}
+let g:ale_fixers = {
+\  'typescript': ['eslint', 'prettier'],
+\  'typescriptreact': ['eslint', 'prettier'],
+\}
+let g:ale_fix_on_save = 1
+let g:ale_completion_enabled = 1
+
+au FileType typescript,typescriptreact nmap <Leader>d :ALEGoToDefinition<CR>
+au FileType typescript,typescriptreact nmap <Leader>t :ALEHover<CR>
+au FileType typescript,typescriptreact nmap <Leader>r :ALERename<CR>
+"}}}
+
+" bash {{{
+au FileType sh setlocal expandtab shiftwidth=2 softtabstop=2
+let g:ale_sh_shellcheck_options = '-x'
+au FileType sh nmap <Leader>f :ALEFix<CR>
+"}}}
+"}}}
+
+" plugin configuration {{{
+" ale
+let g:ale_completion_enabled=1
+let g:ale_set_balloons = 1
+let g:ale_hover_to_floating_preview = 1
+
+" airline
+let g:airline_theme='minimalist'
+let g:airline_section_z=''
+let g:airline#extensions#tabline#enabled = 1
+let g:airline#extensions#ale#enabled = 1
+
+" gitgutter
+let g:gitgutter_realtime = 0
+let g:gitgutter_eager = 0
+
+" ctrlp
+let g:ctrlp_cmd = 'CtrlPMixed'
+let g:ctrlp_working_path_mode = 'ra'
+let g:ctrlp_use_caching = 0
+let g:ctrlp_user_command = ['.git', 'cd %s && git ls-files . -co --exclude-standard', 'find %s -type f']
+"}}}
+
+" mappings {{{
+" splits
+set splitbelow
+set splitright
+nnoremap <C-J> <C-W><C-J>
+nnoremap <C-K> <C-W><C-K>
+nnoremap <C-L> <C-W><C-L>
+nnoremap <C-H> <C-W><C-H>
+
+" quickfix
+map <C-n> :cnext<CR>
+map <C-p> :cprevious<CR>
+nnoremap <leader>a :cclose<CR>
+
+" OS clipboard
+vmap <Leader>y "+y
+vmap <Leader>p "+p
+nnoremap <Leader>y "+yy
+nnoremap <Leader>p "+p
+"}}}
+
+" vim:foldmethod=marker foldlevel=1
+

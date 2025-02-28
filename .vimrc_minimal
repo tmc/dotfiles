@@ -1,0 +1,52 @@
+" tmc's vimrc
+" 
+" don't panic.
+" Also, don't blindly use cargo cult someone else's editor configuration!
+" This is the minimal version - for quick edits and remote systems.
+
+" basics {{{
+set nocompatible
+set smartindent
+set autoindent
+set tabstop=4
+set backspace=indent,eol,start
+set encoding=utf-8
+set relativenumber
+set number
+
+" searching
+set hlsearch
+set incsearch
+
+" navigation
+set path+=**
+set wildmenu
+set wildmode=longest:full,full
+
+" minimal backups
+set noswapfile
+set nobackup
+set nowritebackup
+"}}}
+
+" language basics {{{
+" go
+au BufNewFile,BufRead *.go setlocal noet ts=4 sw=4 sts=4
+
+" typescript
+au BufNewFile,BufRead *.ts,*.tsx setlocal filetype=typescript
+
+" bash
+au FileType sh setlocal expandtab shiftwidth=2 softtabstop=2
+"}}}
+
+" minimal mappings {{{
+" splits
+nnoremap <C-J> <C-W><C-J>
+nnoremap <C-K> <C-W><C-K>
+nnoremap <C-L> <C-W><C-L>
+nnoremap <C-H> <C-W><C-H>
+"}}}
+
+" vim:foldmethod=marker foldlevel=1
+
