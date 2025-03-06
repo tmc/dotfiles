@@ -1,0 +1,41 @@
+#!/bin/bash
+# git-change-master-to-main - Safely convert master branch to main
+set -euo pipefail
+
+# Check if we're on master branch
+if [[ "$(git rev-parse --abbrev-ref HEAD)" != "master" ]]; then
+  echo "Error: Not currently on master branch. Please switch to master first."
+  exit 1
+fi
+
+# Ensure master is up to date with remote
+echo "Updating master branch..."
+git pull origin master || { echo "Failed to pull latest changes from master"; exit 1; }
+
+# Create main branch
+echo "Creating main branch from master..."
+git checkout -b main || { echo "Failed to create main branch"; exit 1; }
+
+# Push main to remote
+echo "Pushing main branch to remote..."
+git push -u origin main || { echo "Failed to push main branch to remote"; exit 1; }
+
+# Check if we can safely update the default branch
+echo "NOTE: Please update the default branch to 'main' in your Git hosting service"
+echo "      (GitHub, GitLab, etc.) before continuing."
+read -p "Have you updated the default branch in your Git hosting service? (y/n) " -n 1 -r
+echo
+if [[ ! $REPLY =~ ^[Yy]$ ]]; then
+  echo "Operation paused. Please update the default branch and run this script again."
+  exit 0
+fi
+
+# Delete master branch locally
+echo "Deleting local master branch..."
+git branch -d master || { echo "Failed to delete local master branch"; exit 1; }
+
+# Delete master branch on remote
+echo "Deleting remote master branch..."
+git push origin --delete master || { echo "Warning: Failed to delete remote master branch"; }
+
+echo "Successfully changed default branch from master to main!"
