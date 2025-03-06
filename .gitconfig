@@ -97,6 +97,7 @@
 
 [commit]
 	gpgsign = true
+	format = ssh
 
 [http]
 	cookiefile = /Users/tmc/.gitcookies

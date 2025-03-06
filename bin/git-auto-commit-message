@@ -1,6 +1,16 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
+# Check if AUTO_COMMIT=1 environment variable is set or --auto flag is used
+AUTO_COMMIT=0
+for arg in "$@"; do
+  if [[ "$arg" == "--auto" ]]; then
+    AUTO_COMMIT=1
+    break
+  fi
+done
+[[ -n "${GIT_AUTO_COMMIT:-}" ]] && AUTO_COMMIT=1
+
 (
   set -x
   PS4=">> command: "
@@ -11,7 +21,7 @@ set -euo pipefail
   git diff --stat . | head -n 1000
   git diff . | head -n 1000
   echo "$@"
-  ) 2>&1 | cgpt -s "You are an expert Git user familiar with this repository's practices. Based on the provided git command output, create a commit message that matches the style used in previous commits. Focus on brevity and stylistic consistency with existing messages. If there are staged changes, presume those are what are going to be committed. Begin by desribing your interpretation of each command in the input (print it out like >>...). Use <thinking>, <reflection>, and a final <output> tag." -O ~/.cgpt-hist-git-"$(date +%s)" \
+  ) 2>&1 | cgpt -s "You are an expert Git user familiar with this repository's practices. Based on the provided git command output, create a commit message that matches the style used in previous commits. Focus on brevity and stylistic consistency with existing messages. If there are staged changes, presume those are what are going to be committed. Begin by desribing your interpretation of each command in the input (print it out like >>...). Use <thinking>, <reflection>, and a final <o> tag." -O ~/.cgpt-hist-git-"$(date +%s)" \
     | tee ~/.git-auto-commit-message.last \
     | (>&2 cat)
 echo -ne "\033[0m" # set normal output
@@ -19,10 +29,16 @@ echo -ne "\033[0m" # set normal output
 (ctx-exec cat ~/.git-auto-commit-message.last; ctx-exec git status .) | cgpt -s "you are an expert bash script authoriing assistant. Based on the git status and the command output, create a 'git commit' command. It should contain one -m arg and use -a depending on status. Output only the command with no suffix or code fence after it." -O ~/.cgpt-hist-git-"$(date +%s)" --prefill='#!/usr/bin/bash' --prefill-echo=false > ~/.git-auto-commit-command.sh
 chmod +x ~/.git-auto-commit-command.sh
 
-# # Show and run the command with confirmation (default: yes)
+# Show and run the command with confirmation (default: yes)
 echo -e "\033[1m"; cat ~/.git-auto-commit-command.sh; echo -e "\033[0m"
-read -p "Run the command above? [Y/n] " -n 1 -r
-echo
-if [[ $REPLY =~ ^[Yy]$ ]] || [[ $REPLY == "" ]]; then
+
+# Skip confirmation if non-interactive or auto-commit is enabled
+if [[ ! -t 0 ]] || [[ $AUTO_COMMIT -eq 1 ]]; then
   ~/.git-auto-commit-command.sh
+else
+  read -p "Run the command above? [Y/n] " -n 1 -r
+  echo
+  if [[ $REPLY =~ ^[Yy]$ ]] || [[ $REPLY == "" ]]; then
+    ~/.git-auto-commit-command.sh
+  fi
 fi

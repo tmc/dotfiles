@@ -41,7 +41,7 @@ Plug 'tmc/vimscripts', { 'rtp': 'git-backups', 'as': 'tmc-git-backups' }
 Plug 'chrisjohnson/vim-grep'
 Plug 'markonm/traces.vim'
 Plug 'mbbill/undotree'
-Plug 'ludovicchabant/vim-gutentags'
+"Plug 'ludovicchabant/vim-gutentags'
 "}}}
 
 " flair {{{
@@ -92,7 +92,7 @@ set belloff+=ctrlg
 set undofile
 set undodir=~/.vim/.undo//
 set backupdir=~/.vim/.backup//
-set directory=~/.vim/.swp//
+set directory=~/.vim/.swp/
 if has('nvim')
   set undodir=~/.vim/.nundo//
   set backupdir=~/.vim/.nbackup//
@@ -160,8 +160,8 @@ let g:ale_fixers = {
 \  'java': ['google_java_format'],
 \  'python': ['black'],
 \  'jsx': ['eslint', 'prettier'],
-\   '*': ['cgpt'],
 \}
+" \   '*': ['cgpt'],
 let g:ale_fix_on_save = 1
 let g:ale_completion_enabled = 1
 let g:ale_set_balloons = 1
@@ -258,8 +258,8 @@ nmap <Leader>gd :ALEGoToDefinition <CR>
 
 " tags {{{
 set tags+=./.tags,.tags;
-let g:gutentags_ctags_tagfile = '.tags'
-let g:gutentags_cache_dir = '~/.vim/tags'
+" let g:gutentags_ctags_tagfile = '.tags'
+" let g:gutentags_cache_dir = '~/.vim/tags'
 "}}}
 
 " plugin configuration {{{
