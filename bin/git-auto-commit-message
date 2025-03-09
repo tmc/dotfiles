@@ -36,7 +36,7 @@ done
     | (>&2 cat)
 echo -ne "\033[0m" # set normal output
 
-(ctx-exec cat ~/.git-auto-commit-message.last; ctx-exec git status .) | cgpt -s "you are an expert bash script authoriing assistant. Based on the git status and the command output, create a 'git commit' command. It should contain one -m arg and use -a depending on status. Output only the command with no suffix or code fence after it." -O ~/.cgpt-hist-git-"$(date +%s)" --prefill='#!/usr/bin/bash' --prefill-echo=false > ~/.git-auto-commit-command.sh
+(ctx-exec cat ~/.git-auto-commit-message.last; ctx-exec git status .) | cgpt -s "you are an expert bash script authoriing assistant. Based on the git status and the command output, create a 'git commit' command. It should contain one -m arg and only include and -a depending on status (if some changes are staged, do not include -a). Output only the command with no suffix or code fence after it." -O ~/.cgpt-hist-git-"$(date +%s)" --prefill='#!/usr/bin/bash' --prefill-echo=false > ~/.git-auto-commit-command.sh
 chmod +x ~/.git-auto-commit-command.sh
 
 # Show and run the command with confirmation (default: yes)
