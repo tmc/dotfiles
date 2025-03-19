@@ -31,7 +31,7 @@ Plug 'dense-analysis/ale'
 
 " optional AI support {{{
 if !exists('$NO_AI_FEATURES')
-  Plug 'github/copilot.vim'
+  " Plug 'github/copilot.vim'
   Plug 'tmc/cgpt', { 'rtp': 'vim', 'do': 'go install ./cmd/cgpt' }
 endif
 "}}}
@@ -45,7 +45,7 @@ Plug 'mbbill/undotree'
 "}}}
 
 " flair {{{
-Plug 'airblade/vim-gitgutter'
+"Plug 'airblade/vim-gitgutter'
 Plug 'nanotech/jellybeans.vim'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
@@ -92,11 +92,11 @@ set belloff+=ctrlg
 set undofile
 set undodir=~/.vim/.undo//
 set backupdir=~/.vim/.backup//
-set directory=~/.vim/.swp/
+"set directory=~/.vim/.swp/
 if has('nvim')
   set undodir=~/.vim/.nundo//
   set backupdir=~/.vim/.nbackup//
-  set directory=~/.vim/.nswp//
+  "set directory=~/.vim/.nswp//
 endif
 if !isdirectory(expand(&undodir))
     call mkdir(expand(&undodir), "p")

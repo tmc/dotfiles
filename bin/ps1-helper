@@ -4,7 +4,7 @@ set -euo pipefail
 
 (
   # Lock file path
-  lockfile=~/.ps1-output-cache.lock
+  lockfile="$HOME/.ps1-output-cache.lock"
 
   # Check if another instance of the script is running
   if [ -e "$lockfile" ]; then
@@ -34,10 +34,42 @@ set -euo pipefail
   {
     last-git-backup
     # if ps1-helper-local is present and executable, run it:
-    if [ -x "${HOME}/bin/ps1-helper-local" ]; then
-      ~/bin/ps1-helper-local
+    if [ -x "$HOME/bin/ps1-helper-local" ]; then
+      "$HOME/bin/ps1-helper-local"
+    fi
+    
+    # If local/bin/ps1-helper-local is present and executable, run it:
+    if [ -x "$HOME/local/bin/ps1-helper-local" ]; then
+      "$HOME/local/bin/ps1-helper-local"
     fi
     echo -n "$(date)"
+    
+    # Add Git branch info, with subtle hints if not available
+    if command -v brew >/dev/null 2>&1 || alias brew >/dev/null 2>&1; then
+      BREW_PREFIX=$(brew --prefix 2>/dev/null || echo "/usr/local")
+      if [ -f "$BREW_PREFIX/etc/bash_completion.d/git-prompt.sh" ]; then
+        source "$BREW_PREFIX/etc/bash_completion.d/git-prompt.sh"
+        echo -n " git:$(__git_ps1 '%s')"
+      else
+        echo -n " \033[90mgit:no-brew-prompt\033[0m"
+      fi
+    elif [ -f "$HOME/.local/homebrew/etc/bash_completion.d/git-prompt.sh" ]; then
+      source "$HOME/.local/homebrew/etc/bash_completion.d/git-prompt.sh"
+      echo -n " git:$(__git_ps1 '%s')"
+    elif [ -f "$HOME/.git-prompt.sh" ]; then
+      source "$HOME/.git-prompt.sh"
+      echo -n " git:$(__git_ps1 '%s')"
+    else
+      # Subtle grey hint
+      echo -n " \033[90mgit:no-prompt\033[0m"
+      # Periodic suggestion (once per day)
+      HINT_FILE="$HOME/.ps1-git-hint-timestamp"
+      CURRENT_TIME=$(date +%s)
+      if [ ! -f "$HINT_FILE" ] || [ $(( CURRENT_TIME - $(cat "$HINT_FILE" 2>/dev/null || echo 0) )) -gt 86400 ]; then
+        echo " \033[90m(Hint: curl -sL https://raw.githubusercontent.com/git/git/master/contrib/completion/git-prompt.sh -o $HOME/.git-prompt.sh for Git branch info)\033[0m"
+        echo "$CURRENT_TIME" > "$HINT_FILE"
+      fi
+    fi
 
     # crontab count:
     echo -n " cronjobs:$(crontab -l 2>/dev/null | grep -cv '^#|^$')"
@@ -48,7 +80,7 @@ set -euo pipefail
     fi
 
     # Only if we get here without errors, update the actual cache file
-    mv "$temp_file" ~/.ps1-output-cache
+    mv "$temp_file" "$HOME/.ps1-output-cache"
   } > "$temp_file" || {
     # If any command in the block fails, remove the temp file and exit
     rm -f "$temp_file"
@@ -60,3 +92,4 @@ set -euo pipefail
 disown -h
 
 exit 0
+

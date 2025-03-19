@@ -111,3 +111,4 @@ if [[ "$OSTYPE" != "darwin"* ]]; then
 fi
 alias cursor-run='osascript -e '\''tell application "Cursor" to activate; tell application "System Events" to tell process "Cursor" to keystroke return using command down'\'
 alias mc='cd ~/go/src/github.com/modelcontextprotocol'
+alias grpe=grep

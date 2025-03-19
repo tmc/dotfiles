@@ -1,96 +1,90 @@
 # ~/.bashrc: executed by bash(1) for non-login shells.
+
+export PATH="$HOME/bin:$HOME/go/bin:$PATH"
+export PATH="$PATH:/usr/local/bin"
+
 case $- in
-*i*) ;;
-*) return ;;
+    *i*) ;; # Interactive shell
+    *) return ;; # Non-interactive shell - exit early
 esac
-if [ -f /usr/local/bin/brew ]; then
-    eval "$(/usr/local/bin/brew shellenv)"
-fi
-if [ -f /opt/homebrew/bin/brew ]; then
-    eval "$(/opt/homebrew/bin/brew shellenv)"
-fi
 
-command -v brew >/dev/null 2>&1 && source "$(brew --prefix)/share/google-cloud-sdk/path.bash.inc"
-
-# don't put duplicate lines or lines starting with space in the history.
-# See bash(1) for more options
+# History settings
 HISTCONTROL=ignorespace
-
-# append to the history file, don't overwrite it
 shopt -s histappend
-
-# for setting history length see HISTSIZE and HISTFILESIZE in bash(1)
 HISTSIZE=10000000
 HISTFILESIZE=200000000
-#export HISTTIMEFORMAT="%s "
-#alias historyiso='HISTTIMEFORMAT="%Y-%m-%dT%H:%M:%S " history'
-if [ -f "${HOME}/bin/ps1-helper" ]; then
-    PROMPT_COMMAND="~/bin/ps1-helper"
-fi
-#export PROMPT_COMMAND="${PROMPT_COMMAND:+$PROMPT_COMMAND$'\n'}history -a; history -c; history -r"
 PROMPT_COMMAND="${PROMPT_COMMAND:+$PROMPT_COMMAND$'\n'}history -a; history -n"
 
-[ -f ~/.ps1-output-cache ] || touch ~/.ps1-output-cache
+# Load Git completion and prompt scripts
+GIT_PS1_SHOWUPSTREAM=verbose
+GIT_PS1_SHOWUNTRACKEDFILES=yes
+GIT_PS1_SHOWDIRTYSTATE=yes
+GIT_PS1_SHOWSTASHSTATE=yes
+GIT_PS1_SHOWCOLORHINTS=yes
 
-PS1='\[\033[1;31m\]$(prompt_status)\[\033[01;34m\]${debian_chroot:+($debian_chroot)}\[\033[01;30m\]\[\033[00m\]\n\[\033[01;32m\]\u@vmbp\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\] $ '
-PS1='\[\033[1;31m\]$(prompt_status)\[\033[01;34m\]${debian_chroot:+($debian_chroot)}\[\033[01;30m\]\[\033[00m\]\n\[\033[01;32m\]\u@$(hostname)\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\] $ '
-PS1='$(prompt_status)\[\033[01;30m\]$(cat ~/.ps1-output-cache)\[\033[00m\]\n\[\033[01;32m\]\u@vmbp\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]$(__git_ps1 "(%s)") $ '
-PS1='\[\033[01;30m\]$(cat ~/.ps1-output-cache)\[\033[00m\]\n\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]$(__git_ps1 "(%s)") $ '
-
-export EDITOR=vim
-export PATH="$HOME/.yarn/bin:$PATH"
-export PATH="$HOME/.cargo/bin:$PATH"
-export PATH="$HOME/go/bin:$PATH"
-export PATH=$HOME/bin:$PATH
-
-# if macos brew directory exists, add it to the path:
-if [ -d /opt/homebrew/bin ]; then
-    export PATH="/opt/homebrew/bin:$PATH"
-fi
-
-#PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@vmbp\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\] $ '
-
-export BASH_SILENCE_DEPRECATION_WARNING=1
-
-export PATH="${KREW_ROOT:-$HOME/.krew}/bin:$PATH"
-
-# if brew exists and the git-prompt.sh file exists, source it
+# Try to load Git prompt from various locations
 if command -v brew >/dev/null 2>&1; then
-    #source $(brew --prefix)/etc/bash_completion
-    git_prompt_file="$(brew --prefix)/etc/bash_completion.d/git-prompt.sh"
-    if [ -f "$git_prompt_file" ]; then
-        source "$git_prompt_file"
+    BREW_PREFIX=$(brew --prefix 2>/dev/null || echo "/usr/local")
+    if [ -f "$BREW_PREFIX/etc/bash_completion.d/git-completion.bash" ]; then
+        . "$BREW_PREFIX/etc/bash_completion.d/git-completion.bash"
+    fi
+    if [ -f "$BREW_PREFIX/etc/bash_completion.d/git-prompt.sh" ]; then
+        . "$BREW_PREFIX/etc/bash_completion.d/git-prompt.sh"
+    fi
+# Check for local Homebrew installation
+elif [ -d "$HOME/.local/homebrew" ]; then
+    if [ -f "$HOME/.local/homebrew/etc/bash_completion.d/git-completion.bash" ]; then
+        . "$HOME/.local/homebrew/etc/bash_completion.d/git-completion.bash"
+    fi
+    if [ -f "$HOME/.local/homebrew/etc/bash_completion.d/git-prompt.sh" ]; then
+        . "$HOME/.local/homebrew/etc/bash_completion.d/git-prompt.sh"
+    fi
+# Try local files
+else
+    if [ -f "$HOME/.git-completion.bash" ]; then
+        . "$HOME/.git-completion.bash"
+    fi
+    if [ -f "$HOME/.git-prompt.sh" ]; then
+        . "$HOME/.git-prompt.sh"
     fi
 fi
 
-PS1='\[\033[01;30m\]$(cat ~/.ps1-output-cache)\[\033[00m\]\n\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]$(__git_ps1 "(%s)") $ '
-if ! declare -f __git_ps1 > /dev/null; then
-    PS1='\[\033[01;30m\]$(cat ~/.ps1-output-cache)\[\033[00m\]\n\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\] $ '
+# Set prompt with git information if available
+[ -f ~/.ps1-output-cache ] || touch ~/.ps1-output-cache
+
+if declare -f __git_ps1 > /dev/null; then
+    PS1='\[\033[01;30m\]$(cat ~/.ps1-output-cache)\[\033[00m\]\n\[\033[01;32m\]\u@\h\[\033[00m\]\[\033[01;34m\] \w\[\033[00m\]$(__git_ps1 " (%s)") $ '
+else
+    PS1='\[\033[01;30m\]$(cat ~/.ps1-output-cache)\[\033[00m\]\n\[\033[01;32m\]\u@\h\[\033[00m\]\[\033[01;34m\] \w\[\033[00m\] $ '
 fi
 
-# if github-copilot-cli exists, source the alias:
+# PS1 helper if available
+if [ -f "${HOME}/bin/ps1-helper" ]; then
+    PROMPT_COMMAND="~/bin/ps1-helper"
+fi
+
+# Environment variables
+export EDITOR=vim
+export BASH_SILENCE_DEPRECATION_WARNING=1
+
+# Load additional configuration files
+[[ -r "/opt/homebrew/etc/profile.d/bash_completion.sh" ]] && . "/opt/homebrew/etc/profile.d/bash_completion.sh"
+if [ -f ~/.bash_aliases ]; then
+    . ~/.bash_aliases
+fi
+if [ -f ~/.sh_aliases ]; then
+    . ~/.sh_aliases
+fi
+if [ -f ~/.sh_aliases_local ]; then
+    . ~/.sh_aliases_local
+fi
+if [ -f ~/.bashrc_local ]; then
+    . ~/.bashrc_local
+fi
+
+# GitHub Copilot CLI setup
 command -v github-copilot-cli >/dev/null 2>&1 && \
     eval "$(github-copilot-cli alias -- "$0")"
 
-
-[[ -r "/opt/homebrew/etc/profile.d/bash_completion.sh" ]] && . "/opt/homebrew/etc/profile.d/bash_completion.sh"
-if [ -f ~/.bash_aliases ]; then
-       . ~/.bash_aliases
-fi
-if [ -f ~/.sh_aliases ]; then
-       . ~/.sh_aliases
-fi
-if [ -f ~/.sh_aliases_local ]; then
-       . ~/.sh_aliases_local
-fi
-if [ -f ~/.bashrc_local ]; then
-       . ~/.bashrc_local
-fi
-export NVM_DIR="$HOME/.nvm"
-[ -s "/opt/homebrew/opt/nvm/nvm.sh" ] && \. "/opt/homebrew/opt/nvm/nvm.sh"  # This loads nvm
-[ -s "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm" ] && \. "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm"  # This loads nvm bash_completion
-export PATH="/opt/homebrew/opt/ruby/bin:$PATH"
-export PATH="$PATH:/usr/local/bin"
-export PATH="$PATH:/opt/homebrew/lib/ruby/gems/3.3.0/bin"
-export PATH="${KREW_ROOT:-$HOME/.krew}/bin:$PATH"
-
+# Google Cloud SDK
+command -v brew >/dev/null 2>&1 && source "$(brew --prefix)/share/google-cloud-sdk/path.bash.inc"
